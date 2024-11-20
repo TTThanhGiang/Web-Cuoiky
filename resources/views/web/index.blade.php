@@ -4,6 +4,7 @@
 
 @section('content')
     <!-- start banner Area -->
+	
 	<section class="banner-area">
 		<div class="container">
 			<div class="row fullscreen align-items-center justify-content-start">

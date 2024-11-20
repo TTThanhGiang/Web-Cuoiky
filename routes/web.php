@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\AccountController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,41 +17,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('web/index');
-});
-Route::get('/detail', function () {
-    return view('web/detail');
-});
-Route::get('/cart', function () {
-    return view('web/cart');
-});
-Route::get('/login', function () {
-    return view('web/login');
-});
-Route::get('/registration', function () {
-    return view('web/registration');
-});
-Route::get('/checkout', function () {
-    return view('web/checkout');
-});
-Route::get('/category', function () {
-    return view('web/category');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
+Route::group(['prefix'=> 'account'], function(){
+    Route::get('/login', [AuthController::class, 'formLogin'])->name('login');
+    Route::get('/verify-account/{email}', [AuthController::class, 'verify'])->name('verify');
+    Route::post('/login', [AuthController::class, 'login']);
+
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/register', [AuthController::class, 'formRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+
+    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+    Route::post('/profile', [AuthController::class, 'checkProfile']);
+
+    Route::get('/reset-password', [AuthController::class, 'formResetPassword'])->name('resetPassword');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+
+    Route::get('/forgot-password', [AuthController::class, 'formForgotPassword'])->name('forgotPassword');
+    Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+
 });
 
-Route::get('admin', function () {
-    return view('admin/index');
-});
 
-Route::get('admin/products', function () {
-    return view('admin/product/index');
-});
-
-Route::get('admin/products/create', function () {
-    return view('admin/product/create');
-});
-
-Route::get('admin/products/edit', function () {
-    return view('admin/product/edit');
-});
-
+Route::get('send',[HomeController::class, 'sendEmail']);
