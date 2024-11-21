@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('web/index');
-});
+Route::get('/', [ProductController::class, 'getProducts'])->name('web/index');
+
 Route::get('/detail', function () {
     return view('web/detail');
 });
@@ -31,9 +31,8 @@ Route::get('/registration', function () {
 Route::get('/checkout', function () {
     return view('web/checkout');
 });
-Route::get('/category', function () {
-    return view('web/category');
-});
+Route::get('/categories', [CategoryController::class, 'index'])->name('web/category');
+Route::get('/categories/products/{id}', [ProductController::class, 'show'])->name('web/detail');
 
 Route::get('admin', function () {
     return view('admin/index');
@@ -50,4 +49,5 @@ Route::get('admin/products/create', function () {
 Route::get('admin/products/edit', function () {
     return view('admin/product/edit');
 });
+
 
