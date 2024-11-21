@@ -31,17 +31,7 @@
 					                    </div>
 					                </form>
 					                
-							    </div><!--//col-->
-							    <div class="col-auto">
-								    
-								    <select class="form-select w-auto">
-										  <option selected="" value="option-1">All</option>
-										  <option value="option-2">This week</option>
-										  <option value="option-3">This month</option>
-										  <option value="option-4">Last 3 months</option>
-										  
-									</select>
-							    </div>							
+							    </div><!--//col-->						
 						    </div><!--//row-->
 					    </div><!--//table-utilities-->
 				    </div><!--//col-auto-->
@@ -55,15 +45,13 @@
 										<thead>
 											<tr>
 												<th class="cell">Id</th>
-												<th class="cell">Tên</th>
-												<th class="cell">Địa chỉ </th>
+												<th class="cell">Name</th>
+												<th class="cell">Address</th>
 												<th class="cell">Email</th>
-												<th class="cell">Phone</th>
-												<th class="cell">Mật Khẩu</th>
-												<th class="cell">Trạng thái</th>
-                                                <th class="cell">Trạng thái</th>
+												<th class="cell">Status</th>
+                                                <th class="cell">Action</th>
 											</tr>
-										</thead>
+										</thead>	
 										<tbody>
                                         @foreach($users as $user)
                                                     <tr>
@@ -71,16 +59,16 @@
                                                         <td class="cell">{{ $user->name }}</td>
                                                         <td class="cell">{{ $user->address }}</td> <!-- Địa chỉ -->
                                                         <td class="cell">{{ $user->email }}</td>
-                                                        <td class="cell">{{ $user->phone }}</td> <!-- Số điện thoại -->
-                                                        <td class="cell">{{ $user->password }}</td> <!-- Mật khẩu -->
                                                         <td class="cell">{{ $user->status == 1 ? 'Active' : 'Inactive' }}</td> <!-- Trạng thái -->
-                                                        <td><a href="{{ route('admin.User.edit', $user->id) }}" class="btn btn-info">View</a></td>
-                                                        <td class="cell">
-																<form action="{{ route('admin.User.delete', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete?')">
-																	@csrf
-																	@method('DELETE')
-																	<button type="submit" class="btn btn-danger">Delete</button>
-																</form>
+                                                        <td>
+														<div style="display: flex; gap: 5px;">
+															<a href="{{ route('admin.User.edit', $user->id) }}" class="btn btn-info btn-sm" style='width: 40px'>View</a>
+															<form action="{{ route('admin.User.delete', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete?')">
+																@csrf
+																@method('DELETE')
+																<button type="submit" class="btn btn-danger btn-sm">Delete</button>
+															</form>
+														</div>
 														</td>
 
                                                     </tr>

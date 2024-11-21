@@ -27,7 +27,7 @@
 					<div class="head">Browse Categories</div>
 					<ul class="main-nav">
                         @foreach ($categories as $cat)
-                            <a href="{{ route('web/category', ['category_id' => $cat->id]) }}">
+                            <a href="{{ route('home.category', ['category_id' => $cat->id]) }}">
                                 <div class="category " >
                                     <h2 class="title" style="padding: 10px; font-size: 16px">{{ $cat->name }}</h2>
                                 </div>
@@ -92,7 +92,7 @@
 						@foreach ($products as $product)
                             <div class="col-lg-4 col-md-6">
                                 <div class="single-product">
-                                    <a href="{{ route('web/detail', $product->id) }}">
+                                    <a href="{{ route('home.detail', $product->id) }}">
                                         <img class="img-fluid" src="{{ asset('img/product/' . $product->image) }}" alt="{{ $product->name }}">
                                         <div class="product-details">
                                             <h6>{{ $product->name }}</h6>

@@ -1,13 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Amin\CategoryController;
+use App\Http\Controllers\Amin\ProductController;
 use App\Http\Controllers\Auth\AccountController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Models\Role;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,10 +22,10 @@ use App\Http\Controllers\ProductController;
 
 
 
-Route::get('/', [ProductController::class, 'getProducts'])->name('web/index');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
-Route::get('/categories', [CategoryController::class, 'index'])->name('web/category');
-Route::get('/categories/products/{id}', [ProductController::class, 'show'])->name('web/detail');
+Route::get('/categories', [CategoryController::class, 'detail'])->name('home.category');
+Route::get('/categories/products/{id}', [HomeController::class, 'show'])->name('home.detail');
 
 Route::group(['prefix'=> 'account'], function(){
     Route::get('/login', [AuthController::class, 'formLogin'])->name('login');
@@ -47,11 +48,12 @@ Route::group(['prefix'=> 'account'], function(){
 
 });
 
-Route::get('admin/User/index', [UserController::class, 'index'])->name('admin.User.index');
-Route::get('admin/User/{id}/edit', [UserController::class, 'edit'])->name('admin.User.edit');
-Route::post('admin/User/{id}/update', [UserController::class, 'update'])->name('admin.User.update');
-Route::delete('admin/User/{id}', [UserController::class, 'delete'])->name('admin.User.delete');
 
-Route::get('admin/User/create', [UserController::class, 'create'])->name('admin.User.create');
-Route::post('admin/User', [UserController::class, 'store'])->name('admin.User.store');
+Route::get('admin/index', [UserController::class, 'index'])->name('admin.User.index');
+Route::get('admin/{id}/edit', [UserController::class, 'edit'])->name('admin.User.edit');
+Route::post('admin/{id}/update', [UserController::class, 'update'])->name('admin.User.update');
+Route::delete('admin/{id}', [UserController::class, 'delete'])->name('admin.User.delete');
+
+Route::get('admin/create', [UserController::class, 'create'])->name('admin.User.create');
+Route::post('admin/user', [UserController::class, 'store'])->name('admin.User.store');
 

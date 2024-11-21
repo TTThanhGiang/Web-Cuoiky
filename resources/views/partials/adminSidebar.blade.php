@@ -167,7 +167,7 @@
           >
             <ul class="submenu-list list-unstyled">
               <li class="submenu-item">
-                <a
+                <a  
                   class="{ childView != null && childView == 'allProduct' ? 'submenu-link active' : 'submenu-link'}"
                   href=""
                 >
@@ -189,14 +189,13 @@
         <li class="nav-item has-submenu">
           <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
           <a
-            class="nav-link submenu-toggle"
+            class="{{'users' == $view ? 'nav-link submenu-toggle active' : 'nav-link submenu-toggle'}}"
             href="#"
             data-bs-toggle="collapse"
             data-bs-target="#submenu-2"
             aria-expanded="false"
             aria-controls="submenu-2"
           >
-          <!-- class="{'users' == view ? 'nav-link submenu-toggle active' : 'nav-link submenu-toggle'}" -->
             <span class="nav-icon">
               <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
               <svg
@@ -243,18 +242,18 @@
             <ul class="submenu-list list-unstyled">
               <li class="submenu-item">
                 <a
-                  class="{ childView != null && childView == 'management-user' ? 'submenu-link active' : 'submenu-link'}"
-                  href="{{ url('/admin/User/index') }}">
+                  class="{{ $childView != null && $childView == 'management-user' ? 'submenu-link active' : 'submenu-link'}}"
+                  href="{{ route('admin.User.index') }}">
                   User Account
                 </a>
               </li>
              
               <li class="submenu-item">
                 <a
-                  class="{ childView != null && childView == 'create-admin' ? 'submenu-link active' : 'submenu-link'}"
-                  href="{{ url('/admin/User/create') }}"
+                  class="{{ $childView != null && $childView == 'create-admin' ? 'submenu-link active' : 'submenu-link'}}"
+                  href="{{ route('admin.User.create') }}"
                 >
-                  create User 
+                  Create User 
                 </a>
               </li>
             </ul>

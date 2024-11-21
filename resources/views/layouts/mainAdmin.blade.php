@@ -25,7 +25,13 @@
     <script src="{{ url('assets/admin/js/all.min.js') }}"></script>
     <!-- App CSS -->
     <link rel="stylesheet" href="{{ url('assets/admin/css/portal.css') }}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <style>
+      .toast-center {
+            top: 10% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+        }
       .container-product {
         width: 100%;
         padding: 20px;
@@ -104,6 +110,7 @@
     <script src="{{ url('assets/admin/js/bootstrap.min.js') }}"></script>
     <script src="{{ url('assets/admin/js/app.js') }}"></script>
     <script src="{{ url('assets/admin/js/custom.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <script>
       function changeCategory(selectElement) {
@@ -127,5 +134,25 @@
       }
     </script>
     @yield('scripts')
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-center", // Đưa thông báo ra giữa màn hình
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+    </script>
   </body>
 </html>

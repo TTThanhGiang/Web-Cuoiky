@@ -1,6 +1,7 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -11,14 +12,17 @@ class UserController extends Controller
     {
         $users = User::all();
         $childView = 'management-user'; // hoặc lấy giá trị này từ đâu đó, ví dụ: session hoặc query string
-        return view('admin.user.index', compact('childView','users'));
+        $view = 'users';
+        return view('admin.user.index', compact('childView','view','users'));
        
     }
 
     // Hiển thị form tạo người dùng mới
     public function create()
     {
-        return view('admin.User.create');
+        $childView = 'create-admin'; // hoặc lấy giá trị này từ đâu đó, ví dụ: session hoặc query string
+        $view = 'users';
+        return view('admin.user.create', compact('childView', 'view'));
     }
 
     // Xử lý lưu người dùng
@@ -64,9 +68,10 @@ class UserController extends Controller
         if (!$user) {
             abort(404, 'User not found');
         }
-    
+        $childView = 'management-user'; // hoặc lấy giá trị này từ đâu đó, ví dụ: session hoặc query string
+        $view = 'users';
         // Trả về view chỉnh sửa với dữ liệu người dùng
-        return view('admin.user.edit', compact('user'));
+        return view('admin.user.edit', compact('user','childView','view'));
     }
 
     // Cập nhật người dùng
@@ -95,14 +100,10 @@ class UserController extends Controller
         return redirect()->route('admin.User.edit', ['id' => $id])->with('success', 'User updated successfully');
     }
 
-    // Xóa người dùng
     public function delete($id)
         {
-            // Tìm người dùng theo ID và xóa
             $user = User::findOrFail($id);
             $user->delete();
-
-            // Chuyển hướng lại trang danh sách người dùng và hiển thị thông báo thành công
             return redirect()->route('admin.User.index')->with('success', 'User deleted successfully');
         }
 }

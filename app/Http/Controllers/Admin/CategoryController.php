@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Amin;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
@@ -16,7 +17,11 @@ class CategoryController extends Controller
         $category = Category::with('products')->findOrFail($categoryId);
         $products = $category->products()->paginate(6);
 
-        return view('web/category', compact('categories', 'category', 'products'));
+        return view('web.category', compact('categories', 'category', 'products'));
+    }
+
+    public function detail(){
+        
     }
 
 

@@ -27,11 +27,17 @@ class AuthController extends Controller
         $params = $request->validated();
         $result = Auth::attempt($params);
         if ($result) {
-            if(Auth::user()->email_verified_at == null){
+            if (Auth::user()->email_verified_at == null || Auth::user()->status != 1) {
                 Auth::logout();
-                return redirect()->back()->with('error', 'Your account is not verify, please check your email again');
+                $errorMessage = 'Your account is not verified or not active, please check your email again.';
+                return redirect()->back()->with('error', $errorMessage);
             }
-            return redirect()->route('home.index')->with('success','Login successful!');
+
+            // $redirectRoute = (Auth::user()->role_id == 1) 
+            //     ? 'admin.User.index'
+            //     : 'home.index';   
+            $redirectRoute = 'home.index';
+            return redirect()->route($redirectRoute)->with('success','Login successful!');
         }
 
         return redirect()->back()->with('error', 'Invalid account.');
@@ -43,7 +49,7 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request){
         $params = $request->validated();
-        $params['role_id'] = 1;
+        $params['role_id'] = 2;
         $result = User::create($params);
         if($result){
             try {
