@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view(view: 'web/index');
-});
+
+Route::get('/', [ProductController::class, 'getProducts'])->name('web/index');
+
 Route::get('/detail', function () {
     return view('web/detail');
 });
@@ -32,9 +33,8 @@ Route::get('/registration', function () {
 Route::get('/checkout', function () {
     return view('web/checkout');
 });
-Route::get('/category', function () {
-    return view('web/category');
-});
+Route::get('/categories', [CategoryController::class, 'index'])->name('web/category');
+Route::get('/categories/products/{id}', [ProductController::class, 'show'])->name('web/detail');
 
 Route::get('admin', function () {
     return view('admin/index');
@@ -52,7 +52,6 @@ Route::get('admin/products/edit', function () {
     return view('admin/product/edit');
 });
 
-// routes/web.php
 
 Route::get('admin/User/index', [UserController::class, 'index'])->name('admin.User.index');
 Route::get('admin/User/{id}/edit', [UserController::class, 'edit'])->name('admin.User.edit');
@@ -61,3 +60,4 @@ Route::delete('admin/User/{id}', [UserController::class, 'delete'])->name('admin
 
 Route::get('admin/User/create', [UserController::class, 'create'])->name('admin.User.create');
 Route::post('admin/User', [UserController::class, 'store'])->name('admin.User.store');
+
