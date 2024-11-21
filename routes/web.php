@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/admin/product',function () {
+    return view('admin.product.index');
+});
+
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 Route::group(['prefix'=> 'account'], function(){
@@ -40,5 +44,3 @@ Route::group(['prefix'=> 'account'], function(){
 
 });
 
-
-Route::get('send',[HomeController::class, 'sendEmail']);

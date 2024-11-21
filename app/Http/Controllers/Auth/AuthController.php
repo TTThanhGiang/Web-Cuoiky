@@ -89,10 +89,9 @@ class AuthController extends Controller
         ]);
 
         $code = sprintf('%05d', rand(0, 99999));
-
         Session::put('password_reset_code', $code);
-
         $user = User::where('email', $request->email)->firstOrFail();
+
         if($user){
             try {
                 Mail::to($user->email)->send(new ForgotPasswordMail($user, $code));
@@ -114,6 +113,7 @@ class AuthController extends Controller
         $request->validated();
         $sessionCode = Session::get('password_reset_code');
         $sessionEmail= Session::get('email_reset');
+        
         if($request->code == $sessionCode){
             $user = User::where('email', $sessionEmail)->firstOrFail();
             $user->password = $request->password;

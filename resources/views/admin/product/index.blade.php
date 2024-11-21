@@ -108,37 +108,34 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr th:each="product : ${products}">
+                          <tr>
                             <td
                               style="text-align: center"
-                              th:text="${product.id}"
                             ></td>
                             <td style="text-align: center">
                               <img
                                 style="max-width: 100px; max-height: 100px"
-                                th:src="@{/assets/web/img/product/{image}(image=${product.image})}"
+                                src="assets/web/img/category/c2.jpg"
                                 alt=""
                               />
                             </td>
-                            <td th:text="${product.name}"></td>
+                            <td>Adidas</td>
                             <td
                               style="text-align: center"
-                              th:text="${product.price}"
-                            ></td>
+                            >150</td>
                             <td
                               style="text-align: center"
-                              th:text="${product.quantity}"
-                            ></td>
+                            >12</td>
                             <td style="text-align: center">
                               <a
                                 style="color: red"
-                                th:href="@{/admin/products/edit/{id}(id=${product.id})}"
+                                href=""
                               >
                                 Sửa
                               </a>
                               <a
                                 style="color: red"
-                                th:href="@{/admin/products/delete/{id}(id=${product.id})}"
+                                href=""
                               >
                                 Xóa
                               </a>
