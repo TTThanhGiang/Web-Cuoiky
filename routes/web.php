@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\AccountController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Models\Role;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
@@ -16,42 +20,32 @@ use App\Http\Controllers\ProductController;
 */
 
 
+
 Route::get('/', [ProductController::class, 'getProducts'])->name('web/index');
 
-Route::get('/detail', function () {
-    return view('web/detail');
-});
-Route::get('/cart', function () {
-    return view('web/cart');
-});
-Route::get('/login', function () {
-    return view('web/login');
-});
-Route::get('/registration', function () {
-    return view('web/registration');
-});
-Route::get('/checkout', function () {
-    return view('web/checkout');
-});
 Route::get('/categories', [CategoryController::class, 'index'])->name('web/category');
 Route::get('/categories/products/{id}', [ProductController::class, 'show'])->name('web/detail');
 
-Route::get('admin', function () {
-    return view('admin/index');
-});
+Route::group(['prefix'=> 'account'], function(){
+    Route::get('/login', [AuthController::class, 'formLogin'])->name('login');
+    Route::get('/verify-account/{email}', [AuthController::class, 'verify'])->name('verify');
+    Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('admin/products', function () {
-    return view('admin/product/index');
-});
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('admin/products/create', function () {
-    return view('admin/product/create');
-});
+    Route::get('/register', [AuthController::class, 'formRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('admin/products/edit', function () {
-    return view('admin/product/edit');
-});
+    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+    Route::post('/profile', [AuthController::class, 'checkProfile']);
 
+    Route::get('/reset-password', [AuthController::class, 'formResetPassword'])->name('resetPassword');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+
+    Route::get('/forgot-password', [AuthController::class, 'formForgotPassword'])->name('forgotPassword');
+    Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+
+});
 
 Route::get('admin/User/index', [UserController::class, 'index'])->name('admin.User.index');
 Route::get('admin/User/{id}/edit', [UserController::class, 'edit'])->name('admin.User.edit');

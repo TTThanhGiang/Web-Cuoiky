@@ -31,7 +31,15 @@
     <link rel="stylesheet" href="{{ url('assets/web/css/ion.rangeSlider.skinFlat.css') }}">  
     <link rel="stylesheet" href="{{ url('assets/web/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ url('assets/web/css/main.css') }}">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+    <style>
+        /* Đưa toast ra giữa màn hình */
+        .toast-center {
+            top: 10% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+        }
+    </style>
 </head>
 <body >
     <header>
@@ -61,6 +69,50 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
     <script src="{{ url('assets/web/js/gmaps.min.js') }}"></script>
     <script src="{{ url('assets/web/js/main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-center", // Đưa thông báo ra giữa màn hình
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
 
+    </script>
+    @if (session('success'))
+    <script>
+        toastr["success"]("{{ session('success') }}", "Information", {
+            closeButton: true,
+            progressBar: true
+        });
+    </script>
+    @endif
+    @if (session('error'))
+    <script>
+        toastr["warning"]("{{ session('error') }}", "Information", {
+            closeButton: true,
+            progressBar: true
+        });
+    </script>
+    @endif
+    @if (session('verified'))
+    <script>
+        toastr["success"]("{{ session('verified') }}", "Information", {
+            closeButton: true,
+            progressBar: true
+        });
+    </script>
+	@endif
 </body>
 </html>
