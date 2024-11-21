@@ -49,7 +49,17 @@
       .container-product label {
         margin-bottom: 10px;
       }
+      .button-container {
+          display: flex;
+          align-items: center;  /* Căn chỉnh các nút theo chiều dọc */
+          gap: 20px;  /* Khoảng cách giữa 2 nút */
+          margin-top: 20px;  /* Khoảng cách từ trên */
+      }
 
+      .button-container a, 
+      .button-container button {
+          padding: 10px 20px;  /* Thêm padding cho các nút */
+      }
       .container-product input[type="text"],
       .container-product input[type="file"],
       .container-product input[type="number"],
@@ -79,6 +89,7 @@
         border-radius: 5px;
         margin-bottom: 20px;
       }
+      
     </style>
   </head>
   <body class="app">
@@ -92,6 +103,8 @@
     <script src="{{ url('assets/admin/js/popper.min.js') }}"></script>
     <script src="{{ url('assets/admin/js/bootstrap.min.js') }}"></script>
     <script src="{{ url('assets/admin/js/app.js') }}"></script>
+    <script src="{{ url('assets/admin/js/custom.js') }}"></script>
+
     <script>
       function changeCategory(selectElement) {
         var selectedValue = selectElement.value;
@@ -113,5 +126,6 @@
         }
       }
     </script>
+    @yield('scripts')
   </body>
 </html>

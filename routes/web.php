@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\ProductController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 
 Route::get('/', [ProductController::class, 'getProducts'])->name('web/index');
 
@@ -50,4 +52,12 @@ Route::get('admin/products/edit', function () {
     return view('admin/product/edit');
 });
 
+
+Route::get('admin/User/index', [UserController::class, 'index'])->name('admin.User.index');
+Route::get('admin/User/{id}/edit', [UserController::class, 'edit'])->name('admin.User.edit');
+Route::post('admin/User/{id}/update', [UserController::class, 'update'])->name('admin.User.update');
+Route::delete('admin/User/{id}', [UserController::class, 'delete'])->name('admin.User.delete');
+
+Route::get('admin/User/create', [UserController::class, 'create'])->name('admin.User.create');
+Route::post('admin/User', [UserController::class, 'store'])->name('admin.User.store');
 
