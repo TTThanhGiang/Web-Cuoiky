@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('web/index');
+    return view(view: 'web/index');
 });
 Route::get('/detail', function () {
     return view('web/detail');
@@ -51,3 +52,12 @@ Route::get('admin/products/edit', function () {
     return view('admin/product/edit');
 });
 
+// routes/web.php
+
+Route::get('admin/User/index', [UserController::class, 'index'])->name('admin.User.index');
+Route::get('admin/User/{id}/edit', [UserController::class, 'edit'])->name('admin.User.edit');
+Route::post('admin/User/{id}/update', [UserController::class, 'update'])->name('admin.User.update');
+Route::delete('admin/User/{id}', [UserController::class, 'delete'])->name('admin.User.delete');
+
+Route::get('admin/User/create', [UserController::class, 'create'])->name('admin.User.create');
+Route::post('admin/User', [UserController::class, 'store'])->name('admin.User.store');
