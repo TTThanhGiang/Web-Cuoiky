@@ -34,7 +34,7 @@
                 />
               </svg>
             </span>
-            <span class="nav-link-text">Tổng quan</span>
+            <span class="nav-link-text">Overview</span>
           </a>
           <!--//nav-link-->
         </li>
@@ -68,7 +68,7 @@
                 />
               </svg>
             </span>
-            <span class="nav-link-text">Danh mục</span>
+            <span class="nav-link-text">Categories</span>
             <span class="submenu-arrow">
               <svg
                 width="1em"
@@ -98,15 +98,14 @@
                   class="{ childView != null && childView == 'allCategory' ? 'submenu-link active' : 'submenu-link'}"
                   href=""
                 >
-                  Tất cả danh mục
+                All Categories
                 </a>
               </li>
               <li class="submenu-item">
                 <a
                   class="{ childView != null && childView == 'createCategory' ? 'submenu-link active' : 'submenu-link'}"
-                  href=""
-                >
-                  Thêm danh mục
+                  href="">
+                  Create Categories
                 </a>
               </li>
             </ul>
@@ -142,7 +141,7 @@
                 />
               </svg>
             </span>
-            <span class="nav-link-text">Sản phẩm</span>
+            <span class="nav-link-text">Products</span>
             <span class="submenu-arrow">
               <svg
                 width="1em"
@@ -172,7 +171,7 @@
                   class="{ childView != null && childView == 'allProduct' ? 'submenu-link active' : 'submenu-link'}"
                   href=""
                 >
-                  Tất cả sản phẩm
+                  All Products
                 </a>
               </li>
               <li class="submenu-item">
@@ -180,7 +179,7 @@
                   class="{ childView != null && childView == 'createProduct' ? 'submenu-link active' : 'submenu-link'}"
                   href=""
                 >
-                  Thêm sản phẩm
+                  Create Products
                 </a>
               </li>
             </ul>
@@ -217,7 +216,7 @@
                 />
               </svg>
             </span>
-            <span class="nav-link-text">Người dùng</span>
+            <span class="nav-link-text">Users</span>
             <span class="submenu-arrow">
               <svg
                 width="1em"
@@ -245,25 +244,17 @@
               <li class="submenu-item">
                 <a
                   class="{ childView != null && childView == 'management-user' ? 'submenu-link active' : 'submenu-link'}"
-                  href=""
-                >
-                  Tài khoản người dùng
+                  href="{{ url('/admin/User/index') }}">
+                  User Account
                 </a>
               </li>
-              <li class="submenu-item">
-                <a
-                  th:class="${ childView != null && childView == 'management-admin' ? 'submenu-link active' : 'submenu-link'}"
-                  th:href="@{/admin/users/management-admin}"
-                >
-                  Tài khoản quản trị viên
-                </a>
-              </li>
+             
               <li class="submenu-item">
                 <a
                   class="{ childView != null && childView == 'create-admin' ? 'submenu-link active' : 'submenu-link'}"
-                  href=""
+                  href="{{ url('/admin/User/create') }}"
                 >
-                  Thêm mới
+                  create User 
                 </a>
               </li>
             </ul>
@@ -289,7 +280,7 @@
                 />
               </svg>
             </span>
-            <span class="nav-link-text">Thống kê</span>
+            <span class="nav-link-text">Statistics</span>
           </a>
           <!--//nav-link-->
         </li>
@@ -316,7 +307,7 @@
                 />
               </svg>
             </span>
-            <span class="nav-link-text">Hỗ trợ</span>
+            <span class="nav-link-text">Help</span>
           </a>
           <!--//nav-link-->
         </li>

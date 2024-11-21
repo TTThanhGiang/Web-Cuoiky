@@ -4,8 +4,10 @@ use App\Http\Controllers\Auth\AccountController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Models\Role;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,11 +19,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/admin/product',function () {
-    return view('admin.product.index');
-});
 
-Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
+Route::get('/', [ProductController::class, 'getProducts'])->name('web/index');
+
+Route::get('/categories', [CategoryController::class, 'index'])->name('web/category');
+Route::get('/categories/products/{id}', [ProductController::class, 'show'])->name('web/detail');
 
 Route::group(['prefix'=> 'account'], function(){
     Route::get('/login', [AuthController::class, 'formLogin'])->name('login');
@@ -43,4 +46,12 @@ Route::group(['prefix'=> 'account'], function(){
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 
 });
+
+Route::get('admin/User/index', [UserController::class, 'index'])->name('admin.User.index');
+Route::get('admin/User/{id}/edit', [UserController::class, 'edit'])->name('admin.User.edit');
+Route::post('admin/User/{id}/update', [UserController::class, 'update'])->name('admin.User.update');
+Route::delete('admin/User/{id}', [UserController::class, 'delete'])->name('admin.User.delete');
+
+Route::get('admin/User/create', [UserController::class, 'create'])->name('admin.User.create');
+Route::post('admin/User', [UserController::class, 'store'])->name('admin.User.store');
 
