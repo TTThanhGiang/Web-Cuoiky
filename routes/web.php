@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Amin\CategoryController;
 use App\Http\Controllers\Amin\ProductController;
@@ -55,6 +56,15 @@ Route::group(['prefix'=> 'account'], function(){
 
 });
 
+Route::group(['prefix' => 'admin/blogs', 'as' => 'admin.blogs.'], function () {
+    Route::get('/', [BlogController::class, 'index'])->name('index'); 
+    Route::get('/create', [BlogController::class, 'create'])->name('create'); 
+    Route::post('/create', [BlogController::class, 'store'])->name('store');
+
+    Route::get('/edit/{id}', [BlogController::class, 'edit'])->name('edit'); 
+    Route::post('/edit/{id}', [BlogController::class, 'update'])->name('update');
+});
+
 
 Route::get('admin/index', [UserController::class, 'index'])->name('admin.User.index');
 Route::get('admin/{id}/edit', [UserController::class, 'edit'])->name('admin.User.edit');
@@ -63,4 +73,6 @@ Route::delete('admin/{id}', [UserController::class, 'delete'])->name('admin.User
 
 Route::get('admin/create', [UserController::class, 'create'])->name('admin.User.create');
 Route::post('admin/user', [UserController::class, 'store'])->name('admin.User.store');
+
+
 

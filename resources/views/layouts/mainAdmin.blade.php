@@ -111,7 +111,7 @@
     <script src="{{ url('assets/admin/js/app.js') }}"></script>
     <script src="{{ url('assets/admin/js/custom.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script>
       function changeCategory(selectElement) {
         var selectedValue = selectElement.value;
@@ -153,6 +153,13 @@
             "hideMethod": "fadeOut"
         };
 
+    </script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
     </script>
   </body>
 </html>
