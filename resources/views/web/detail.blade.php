@@ -62,11 +62,11 @@
 							</button>
 						</div>
 						<div class="card_area d-flex align-items-center">
-							<form id="add-to-cart-{{ $product->id }}" action="{{ route('cart.add') }}" method="POST" class="social-info">
+							<form id="add-to-cart-{{ $product->id }}" action="{{ route('cart.add') }}" method="POST" >
 								@csrf
 								<input type="hidden" name="product_id" value="{{ $product->id }}">
 								<input type="hidden" name="quantity" id="hidden-quantity" value="1">
-								<a href="javascript:void(0);" onclick="document.getElementById('add-to-cart-{{ $product->id }}').submit();">
+								<a class="primary-btn" href="javascript:void(0);" onclick="document.getElementById('add-to-cart-{{ $product->id }}').submit();">
 									Add to Cart
 								</a>
 							</form>

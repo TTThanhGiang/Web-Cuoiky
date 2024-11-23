@@ -94,12 +94,9 @@
 
 
                             <tr class="bottom_button">
-                                <td>
-                                    
-                                </td>
-                                <td>
-
-                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td>
                                     <h5>Subtotal</h5>
                                 </td>
@@ -108,15 +105,10 @@
                                 </td>
                             </tr>
                             <tr class="out_button_area">
-                                <td>
-
-                                </td>
-                                <td>
-
-                                </td>
-                                <td>
-                                    
-                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td>
                                     <div class="checkout_btn_inner d-flex align-items-center">
                                         <a class="gray_btn" href="#">Shopping</a>

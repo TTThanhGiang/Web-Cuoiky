@@ -27,15 +27,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/details/{id}',[HomeController::class, 'detail'])->name('home.detail');
 Route::get('/category/{id?}',[HomeController::class, 'category'])->name('category.products');
-
-
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
-Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
-Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
-
 Route::get('/blogs', [HomeController::class, 'viewBlogs'])->name('blogs.view');
 Route::get('/blogs/{id}', [HomeController::class, 'viewBlogDetail'])->name('blogs.viewBlogDetail');
+
+
+Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
+    Route::get('/', [CartController::class, 'viewCart'])->name('view');      
+    Route::post('/', [CartController::class, 'addToCart'])->name('add');    
+    Route::post('/update', [CartController::class, 'update'])->name('update'); 
+    Route::post('/remove', [CartController::class, 'remove'])->name('remove');
+});
 
 
 Route::group(['prefix'=> 'account'], function(){
