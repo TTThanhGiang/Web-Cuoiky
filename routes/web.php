@@ -5,7 +5,8 @@ use App\Http\Controllers\Amin\CategoryController;
 use App\Http\Controllers\Amin\ProductController;
 use App\Http\Controllers\Auth\AccountController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Web\CartController;
+use App\Http\Controllers\Web\HomeController;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
@@ -23,9 +24,15 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/details/{id}',[HomeController::class, 'detail'])->name('home.detail');
+Route::get('/category/{id?}',[HomeController::class, 'category'])->name('category.products');
 
-Route::get('/categories', [CategoryController::class, 'detail'])->name('home.category');
-Route::get('/categories/products/{id}', [HomeController::class, 'show'])->name('home.detail');
+
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+
 
 Route::group(['prefix'=> 'account'], function(){
     Route::get('/login', [AuthController::class, 'formLogin'])->name('login');

@@ -192,8 +192,8 @@
 					@foreach ($latestProducts as $product)
                         <div class="col-lg-3 col-md-6">
                             <div class="single-product">
-                                <img class="img-fluid" src="{{ $product->image ? 'assets/'  .$product->image->path: 'assets/web/img/product/p1.jpg' }}" 
-								alt="{{ $product->name }}">
+                                <a href="{{ route('home.detail', $product->id)}}"><img class="img-fluid" src="{{ $product->image ? 'assets/'  .$product->image->path: 'assets/web/img/product/p1.jpg' }}" 
+								alt="{{ $product->name }}"></a>
                                 <div class="product-details">
                                     <h6>{{ $product->name }}</h6>
                                     <div class="price">
@@ -203,10 +203,15 @@
                                         @endif
                                     </div>
                                     <div class="prd-bottom">
-                                        <a href="#" class="social-info">
-                                            <span class="ti-bag"></span>
-                                            <p class="hover-text">add to bag</p>
-                                        </a>
+										<form id="add-to-cart-{{ $product->id }}" action="{{ route('cart.add') }}" method="POST" class="social-info">
+											@csrf
+											<input type="hidden" name="product_id" value="{{ $product->id }}">
+											<input type="hidden" name="quantity" value="1">
+											<a href="javascript:void(0);" onclick="document.getElementById('add-to-cart-{{ $product->id }}').submit();">
+												<span class="ti-bag"></span>
+												<p class="hover-text">add to bag</p>
+											</a>
+										</form>
                                         <a href="#" class="social-info">
                                             <span class="lnr lnr-heart"></span>
                                             <p class="hover-text">Wishlist</p>
