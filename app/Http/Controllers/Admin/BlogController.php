@@ -30,4 +30,6 @@ class BlogController extends Controller
         return view('admin.blog.edit', compact('childView','view'));  //Không đụng vào childView và  view
     }
 
+    
+
 }

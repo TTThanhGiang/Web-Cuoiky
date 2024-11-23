@@ -34,6 +34,9 @@ Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 
+Route::get('/blogs', [HomeController::class, 'viewBlogs'])->name('blogs.view');
+Route::get('/blogs/{id}', [HomeController::class, 'viewBlogDetail'])->name('blogs.viewBlogDetail');
+
 
 Route::group(['prefix'=> 'account'], function(){
     Route::get('/login', [AuthController::class, 'formLogin'])->name('login');

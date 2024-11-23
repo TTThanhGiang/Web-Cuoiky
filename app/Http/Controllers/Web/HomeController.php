@@ -52,5 +52,13 @@ class HomeController extends Controller
     }
 
 
+    public function viewBlogs(){
+        return view('web.blog');
+    }
+
+    public function viewBlogDetail(){
+        return view('web.blog_detail');
+    }
+
     
 }

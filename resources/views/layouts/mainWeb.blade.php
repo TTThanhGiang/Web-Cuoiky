@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="{{ url('assets/web/css/ion.rangeSlider.skinFlat.css') }}">  
     <link rel="stylesheet" href="{{ url('assets/web/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ url('assets/web/css/main.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/web/css/blog.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <style>
         /* Đưa toast ra giữa màn hình */
