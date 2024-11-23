@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Mail\VerifyAccount;
+use App\Models\Category;
 use App\Models\Product;
 use Exception;
 use Illuminate\Http\Request;
@@ -25,13 +26,29 @@ class HomeController extends Controller
         return view('web.index', compact('latestProducts','outstandingProducts'));
     }
 
-    public function details($id)
+    public function detail($id)
     {
         $product = Product::find($id);
         if (!$product) {
-            return redirect()->route('web/=')->with('error', 'Product not found');
+            return redirect()->back()->with('error', 'Product not found');
         }
-        return view('web/detail', compact('product'));
+        return view('web.detail', compact('product'));
+    }
+
+    public function category(Request $request, $id = null)
+    {
+        $perPage = $request->input('per_page', 6);
+
+        if($id){
+            $category = Category::findOrFail($id);
+            $products = Product::where('category_id', $id)->paginate($perPage);
+        }else{
+            $category = null;
+            $products = Product::paginate($perPage);
+        }
+
+        $categories = Category::withCount('products')->get();
+        return view('web.category', compact('categories', 'category', 'products'));
     }
 
 

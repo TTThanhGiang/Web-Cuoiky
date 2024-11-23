@@ -27,44 +27,49 @@
 				<div class="col-lg-6">
 					<div class="s_Product_carousel">
 						<div class="single-prd-item">
-							<img class="img-fluid" src="assets/web/img/category/s-p1.jpg" alt="">
+							<img class="img-fluid" src="{{ $product->image ? 'assets/'  .$product->image->path: 'assets/web/img/product/p1.jpg' }}" alt="{{ $product->name }}">
 						</div>
 						<div class="single-prd-item">
-							<img class="img-fluid" src="assets/web/img/category/s-p1.jpg" alt="">
+							<img class="img-fluid" src="{{ $product->image ? 'assets/'  .$product->image->path: 'assets/web/img/product/p1.jpg' }}" alt="{{ $product->name }}">
 						</div>
 						<div class="single-prd-item">
-							<img class="img-fluid" src="assets/web/img/category/s-p1.jpg" alt="">
+							<img class="img-fluid" src="{{ $product->image ? 'assets/'  .$product->image->path: 'assets/web/img/product/p1.jpg' }}" alt="{{ $product->name }}">
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-5 offset-lg-1">
-					<div class="s_product_text">
-						<!-- Hiển thị tên sản phẩm -->
-                        <h3>{{ $product->name }}</h3>
-
-        <!-- Hiển thị giá sản phẩm -->
-        <h2>${{ number_format($product->price, 2) }}</h2>
-
-        <ul class="list">
-            <!-- Hiển thị danh mục sản phẩm -->
-            <li><a class="active" href="#"><span>Category</span> : {{ $product->category->name }}</a></li>
-
-            <!-- Kiểm tra tính sẵn có của sản phẩm -->
-            <li><a href="#"><span>Availability</span> :
-                {{ $product->quantity > 0 ? 'In Stock' : 'Out of Stock' }}
-            </a></li>
-        </ul>
-
-        <!-- Mô tả sản phẩm -->
-        <p>{{ $product->description }}</p>
+				<div class="s_product_text">
+						<h3>{{ $product->name}}</h3>
+						@if($product->discount && $product->discount > 0)
+							<h2>{{ $product->discount }} $</h2>
+							<h2 class="l-through">{{ $product->price }} $</h2>
+						@else
+							<h2>{{ $product->price }} $</h2>
+						@endif
+						<ul class="list">
+							<li><a class="active" href="{{ route('category.products', $product->category->id)}}"><span>Category</span> : {{ $product->category->name}}</a></li>
+							<li><span>Availibility</span> : {{ $product->quantity}}</li>
+						</ul>
+						<p>{{ $product->description}}</p>
 						<div class="product_count">
 							<label for="qty">Quantity:</label>
 							<input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-							<button class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-							<button class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+							<button onclick="increaseQuantity()" class="increase items-count" type="button">
+								<i class="lnr lnr-chevron-up"></i>
+							</button>
+							<button onclick="decreaseQuantity()" class="reduced items-count" type="button">
+								<i class="lnr lnr-chevron-down"></i>
+							</button>
 						</div>
 						<div class="card_area d-flex align-items-center">
-							<a class="primary-btn" href="#">Add to Cart</a>
+							<form id="add-to-cart-{{ $product->id }}" action="{{ route('cart.add') }}" method="POST" class="social-info">
+								@csrf
+								<input type="hidden" name="product_id" value="{{ $product->id }}">
+								<input type="hidden" name="quantity" id="hidden-quantity" value="1">
+								<a href="javascript:void(0);" onclick="document.getElementById('add-to-cart-{{ $product->id }}').submit();">
+									Add to Cart
+								</a>
+							</form>
 							<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
 							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
 						</div>
