@@ -103,7 +103,20 @@ class UserController extends Controller
     public function delete($id)
         {
             $user = User::findOrFail($id);
-            $user->delete();
+            $user->update(['status'=> 0]);
             return redirect()->route('admin.User.index')->with('success', 'User deleted successfully');
         }
+        public function search(Request $request)
+    {
+        $search = $request->input('searchusers');
+        $view = 'users';
+        $childView = 'management-user';
+        // Lọc đơn hàng theo tên (hoặc các trường khác)
+        $users = User::when($search, function ($query) use ($search) {
+            return $query->where('name', 'like', '%' . $search . '%');
+        })->get();
+
+        // Trả về view với các đơn hàng đã lọc
+        return view('admin.User.index', compact('users','view','childView'));
+    }
 }
