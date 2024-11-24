@@ -6,6 +6,9 @@ use App\Http\Controllers\Amin\CategoryController;
 use App\Http\Controllers\Amin\ProductController;
 use App\Http\Controllers\Auth\AccountController;
 use App\Http\Controllers\Auth\AuthController;
+
+use App\Http\Controllers\Admin\OrderController;
+use App\Models\Order;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\HomeController;
 use App\Models\Role;
@@ -70,13 +73,36 @@ Route::group(['prefix' => 'admin/blogs', 'as' => 'admin.blogs.'], function () {
 });
 
 
-Route::get('admin/index', [UserController::class, 'index'])->name('admin.User.index');
-Route::get('admin/{id}/edit', [UserController::class, 'edit'])->name('admin.User.edit');
-Route::post('admin/{id}/update', [UserController::class, 'update'])->name('admin.User.update');
-Route::delete('admin/{id}', [UserController::class, 'delete'])->name('admin.User.delete');
+Route::group(['prefix' => 'admin'], function () {
+    // Show all users
+    Route::get('/user/index', [UserController::class, 'index'])->name('admin.User.index');
+    
+    // Create a new user
+    Route::get('/user/create', [UserController::class, 'create'])->name('admin.User.create');
+    Route::post('/user/user', [UserController::class, 'store'])->name('admin.User.store');
+    
+    // Edit an existing user
+    Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.User.edit');
+    Route::post('/user/{id}/update', [UserController::class, 'update'])->name('admin.User.update');
+    //search
+    Route::get('/user/search', [UserController::class, 'search'])->name('admin.User.search');
+    // Delete a user
+    Route::delete('/user/{id}', [UserController::class, 'delete'])->name('admin.User.delete');
+    // show all order
+    Route::get('/order/index', [OrderController::class, 'index'])->name('admin.order.index');
+    // show view order
+    Route::get('/order/{id}/show', [OrderController::class, 'show'])->name('admin.order.show');
+    // form edit
+    Route::get('/order/{id}/edit', [OrderController::class, 'edit'])->name('admin.order.edit');
 
-Route::get('admin/create', [UserController::class, 'create'])->name('admin.User.create');
-Route::post('admin/user', [UserController::class, 'store'])->name('admin.User.store');
+    // Route update
+    Route::put('/order/{id}', [OrderController::class, 'update'])->name('admin.order.update');
+    //search
+    Route::get('/order/search', [OrderController::class, 'search'])->name('admin.order.search');
+
+
+});
+
 
 
 

@@ -44,8 +44,7 @@
 
                         <label for="role_id">Role</label>
                         <select name="role_id" id="role_id" class="form-control">
-                            <option value="1" {{ old('role_id', $user->role_id) == 1 ? 'selected' : '' }}>Admin</option>
-                            <option value="2" {{ old('role_id', $user->role_id) == 2 ? 'selected' : '' }}>Customer</option>
+                            <option value="1" {{ old('role_id', $user->role_id) == 1 ? 'selected' : '' }}>Admin</option>                     
                             <option value="3" {{ old('role_id', $user->role_id) == 3 ? 'selected' : '' }}>Employee</option>
                         </select>
 

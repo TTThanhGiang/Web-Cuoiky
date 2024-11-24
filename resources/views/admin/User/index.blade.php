@@ -22,14 +22,15 @@
 					     <div class="page-utilities">
 						    <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
 							    <div class="col-auto">
-								    <form class="table-search-form row gx-1 align-items-center">
-					                    <div class="col-auto">
-					                        <input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Search">
-					                    </div>
-					                    <div class="col-auto">
-					                        <button type="submit" class="btn app-btn-secondary">Search</button>
-					                    </div>
-					                </form>
+								<form action="{{ route('admin.User.search') }}" method="GET" class="table-search-form row gx-1 align-items-center">
+								<div class="col-auto">
+									<input type="text" id="search-users" name="searchusers" class="form-control search-orders" placeholder="Search" value="{{ request()->input('searchorders') }}">
+								</div>
+								<div class="col-auto">
+									<button type="submit" class="btn app-btn-secondary">Search</button>
+								</div>
+							</form>
+
 					                
 							    </div><!--//col-->						
 						    </div><!--//row-->
@@ -61,14 +62,28 @@
                                                         <td class="cell">{{ $user->email }}</td>
                                                         <td class="cell">{{ $user->status == 1 ? 'Active' : 'Inactive' }}</td> <!-- Trạng thái -->
                                                         <td>
-														<div style="display: flex; gap: 5px;">
-															<a href="{{ route('admin.User.edit', $user->id) }}" class="btn btn-info btn-sm" style='width: 40px'>View</a>
-															<form action="{{ route('admin.User.delete', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete?')">
-																@csrf
-																@method('DELETE')
-																<button type="submit" class="btn btn-danger btn-sm">Delete</button>
-															</form>
-														</div>
+															<div style="display: flex; gap: 5px; align-items: stretch;">
+																<!-- Nút View -->
+																<a href="{{ route('admin.User.edit', $user->id) }}" 
+																class="btn btn-info btn-sm" 
+																style="flex: none; width: 70px; height: 30px; text-align: center; padding: 5px 0;">
+																	View
+																</a>
+																
+																<!-- Form Delete -->
+																<form action="{{ route('admin.User.delete', $user->id) }}" 
+																	method="POST" 
+																	onsubmit="return confirm('Are you sure you want to delete?')" 
+																	style="flex: none; width: 70px; height: 30px">
+																	@csrf
+																	@method('DELETE')
+																	<button type="submit" 
+																			class="btn btn-danger btn-sm" 
+																			style="width: 100%;height: 100%; padding: 5px 0;">
+																		Delete
+																	</button>
+																</form>
+															</div>			
 														</td>
 
                                                     </tr>
