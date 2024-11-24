@@ -1,13 +1,16 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Amin\CategoryController;
 use App\Http\Controllers\Amin\ProductController;
 use App\Http\Controllers\Auth\AccountController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\HomeController;
+
 use App\Http\Controllers\Admin\OrderController;
 use App\Models\Order;
+use App\Http\Controllers\Web\CartController;
+use App\Http\Controllers\Web\HomeController;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
@@ -25,9 +28,19 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/details/{id}',[HomeController::class, 'detail'])->name('home.detail');
+Route::get('/category/{id?}',[HomeController::class, 'category'])->name('category.products');
+Route::get('/blogs', [HomeController::class, 'viewBlogs'])->name('blogs.view');
+Route::get('/blogs/{id}', [HomeController::class, 'viewBlogDetail'])->name('blogs.viewBlogDetail');
 
-Route::get('/categories', [CategoryController::class, 'detail'])->name('home.category');
-Route::get('/categories/products/{id}', [HomeController::class, 'show'])->name('home.detail');
+
+Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
+    Route::get('/', [CartController::class, 'viewCart'])->name('view');      
+    Route::post('/', [CartController::class, 'addToCart'])->name('add');    
+    Route::post('/update', [CartController::class, 'update'])->name('update'); 
+    Route::post('/remove', [CartController::class, 'remove'])->name('remove');
+});
+
 
 Route::group(['prefix'=> 'account'], function(){
     Route::get('/login', [AuthController::class, 'formLogin'])->name('login');
@@ -48,6 +61,15 @@ Route::group(['prefix'=> 'account'], function(){
     Route::get('/forgot-password', [AuthController::class, 'formForgotPassword'])->name('forgotPassword');
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 
+});
+
+Route::group(['prefix' => 'admin/blogs', 'as' => 'admin.blogs.'], function () {
+    Route::get('/', [BlogController::class, 'index'])->name('index'); 
+    Route::get('/create', [BlogController::class, 'create'])->name('create'); 
+    Route::post('/create', [BlogController::class, 'store'])->name('store');
+
+    Route::get('/edit/{id}', [BlogController::class, 'edit'])->name('edit'); 
+    Route::post('/edit/{id}', [BlogController::class, 'update'])->name('update');
 });
 
 
@@ -80,5 +102,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 });
+
+
 
 

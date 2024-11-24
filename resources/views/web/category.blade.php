@@ -24,18 +24,24 @@
 		<div class="row">
 			<div class="col-xl-3 col-lg-4 col-md-5">
 				<div class="sidebar-categories">
-					<div class="head">Browse Categories</div>
-					<ul class="main-nav">
-                        @foreach ($categories as $cat)
-                            <a href="{{ route('home.category', ['category_id' => $cat->id]) }}">
-                                <div class="category " >
-                                    <h2 class="title" style="padding: 10px; font-size: 16px">{{ $cat->name }}</h2>
-                                </div>
-                            </a>
-                        @endforeach
-                    </ul>
+					<div class="head">Products Category</div>
+					<ul class="main-categories">
+						<li class="main-nav-list">
+							<a class="category-link {{ is_null($category) ? 'active' : '' }}" href="{{ route('category.products') }}">
+								All<span class="number">({{ \App\Models\Product::count() }})</span>
+							</a>
+						</li>
+						@foreach ($categories as $cat)
+							<li class="main-nav-list">
+								<a class="category-link {{ ($category && $cat->id === $category->id) ? 'active' : '' }}" href="{{ route('category.products', $cat->id) }}">
+									{{ $cat->name }} <span class="number">({{ $cat->products_count }})</span>
+								</a>
+							</li>
+						@endforeach
+
+					</ul>
 				</div>
-				<div class="sidebar-filter mt-50">
+				<!-- <div class="sidebar-filter mt-50">
 					<div class="top-filter-head">Product Filters</div>
 					<div class="common-filter">
 						<div class="head">Brands</div>
@@ -77,184 +83,89 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<div class="col-xl-9 col-lg-8 col-md-7">
 				<!-- Start Filter Bar -->
 				<div class="filter-bar d-flex flex-wrap align-items-center">
-					<div class="head" style="color: white; font-size: 16px; padding: 13px">Products</div>
+					<div class="sorting mr-auto">
+						<form method="GET" action="{{ route('category.products', ['id' => request('id') ?? '']) }}">
+							<select name="per_page" onchange="this.form.submit()">
+								<option value="6" {{ request('per_page') == 6 ? 'selected' : '' }}>Show 6 products</option>
+								<option value="9" {{ request('per_page') == 9 ? 'selected' : '' }}>Show 9 products</option>
+								<option value="12" {{ request('per_page') == 12 ? 'selected' : '' }}>Show 12 products</option>
+							</select>
+						</form>
+					</div>
+					<div class="pagination">
+						
+					</div>
 				</div>
 				<!-- End Filter Bar -->
 				<!-- Start Best Seller -->
 				<section class="lattest-product-area pb-40 category-list">
 					<div class="row">
 						<!-- single product -->
-						@foreach ($products as $product)
-                            <div class="col-lg-4 col-md-6">
-                                <div class="single-product">
-                                    <a href="{{ route('home.detail', $product->id) }}">
-                                        <img class="img-fluid" src="{{ asset('img/product/' . $product->image) }}" alt="{{ $product->name }}">
-                                        <div class="product-details">
-                                            <h6>{{ $product->name }}</h6>
-                                            <div class="price">
-                                                <h6>${{ $product->price }}</h6>
-                                                @if ($product->discount)
-                                                    <h6 class="l-through">${{ $product->price + $product->discount }}</h6>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
+						@forelse($products as $product)
+						<div class="col-lg-4 col-md-6">
+							<div class="single-product">
+								<a href="{{ route('home.detail', $product->id)}}"><img class="img-fluid" src="{{ $product->image ? 'assets/'  .$product->image->path: 'assets/web/img/product/p1.jpg' }}" alt=""></a>
+								<div class="product-details">
+									<h6>{{ $product->name }}</h6>
+									<div class="price">
+										@if($product->discount && $product->discount > 0)
+											<h6>{{ $product->discount }} $</h6>
+											<h6 class="l-through">{{ $product->price }} $</h6>
+										@else
+											<h6>{{ $product->price }} $</h6>
+										@endif
+									</div>
+									<div class="prd-bottom">
 
-                        @endforeach
+										<a href="" class="social-info">
+											<span class="ti-bag"></span>
+											<p class="hover-text">add to bag</p>
+										</a>
+										<a href="" class="social-info">
+											<span class="lnr lnr-heart"></span>
+											<p class="hover-text">Wishlist</p>
+										</a>
+										<a href="" class="social-info">
+											<span class="lnr lnr-sync"></span>
+											<p class="hover-text">compare</p>
+										</a>
+										<a href="" class="social-info">
+											<span class="lnr lnr-move"></span>
+											<p class="hover-text">view more</p>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						@empty
+						<div class="col-12 text-center">
+							<p>No products found in this category.</p>
+						</div>
+						@endforelse
+
 					</div>
 				</section>
 				<!-- End Best Seller -->
 				<!-- Start Filter Bar -->
-                <div class="pagination">
-                    {{ $products->appends(request()->query())->links() }}
-                </div>
-
+				@if ($products->hasPages())
+					<div class="filter-bar d-flex flex-wrap align-items-center">
+							<div class="pagination">
+								{{ $products->links('vendor.pagination.bootstrap-4') }}
+							</div>					
+					</div>
+				@endif
 				<!-- End Filter Bar -->
 			</div>
 		</div>
 	</div>
-
 	<!-- Start related-product Area -->
-	<section class="related-product-area section_gap">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-6 text-center">
-					<div class="section-title">
-						<h1>Deals of the Week</h1>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-							magna aliqua.</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-9">
-					<div class="row">
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r1.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r2.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r3.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r5.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r6.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r7.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r9.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r10.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r11.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="ctg-right">
-						<a href="#" target="_blank">
-							<img class="img-fluid d-block mx-auto" src="img/category/c5.jpg" alt="">
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+	
+	<!-- End related-product Area -->
+	
 	<!-- End related-product Area -->
 @endsection

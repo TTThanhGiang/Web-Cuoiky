@@ -5,7 +5,7 @@
     <!-- Mobile Specific Meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Favicon-->
-	<link rel="shortcut icon" href="img/fav.png">
+	<link rel="shortcut icon" href="assets/web/img/fav.png">
 	<!-- Author Meta -->
 	<meta name="author" content="CodePixar">
 	<!-- Meta Description -->
@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="{{ url('assets/web/css/ion.rangeSlider.skinFlat.css') }}">  
     <link rel="stylesheet" href="{{ url('assets/web/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ url('assets/web/css/main.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/web/css/blog.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <style>
         /* Đưa toast ra giữa màn hình */
@@ -38,6 +39,9 @@
             top: 10% !important;
             left: 50% !important;
             transform: translate(-50%, -50%) !important;
+        }
+        .category-link.active {
+            color: #ffc107; /* Thay đổi màu chữ nếu cần */
         }
     </style>
 </head>
@@ -89,6 +93,30 @@
             "hideMethod": "fadeOut"
         };
 
+        function updateHiddenQuantity() {
+            var quantity = document.getElementById("sst").value;
+            document.getElementById("hidden-quantity").value = quantity;
+        }
+        function increaseQuantity() {
+            var quantityInput = document.getElementById("sst");
+            var currentValue = parseInt(quantityInput.value) || 1;
+
+            quantityInput.value = currentValue + 1;
+            updateHiddenQuantity();
+        }
+
+        function decreaseQuantity() {
+            var quantityInput = document.getElementById("sst");
+            var currentValue = parseInt(quantityInput.value) || 1;
+
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+            }
+
+            updateHiddenQuantity();
+        }
+
+        document.getElementById("sst").addEventListener("input", updateHiddenQuantity);
     </script>
     @if (session('success'))
     <script>
