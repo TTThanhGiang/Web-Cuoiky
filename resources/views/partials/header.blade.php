@@ -33,6 +33,7 @@
 									aria-expanded="false">{{ Auth::user()->name}}</a>
 									<ul class="dropdown-menu">
 										<li class="nav-item"><a class="nav-link" href="{{ route('profile') }}">Profile</a></li>
+										<li class="nav-item"><a class="nav-link" href="{{ route('orders') }}">Orders</a></li>
 										<li class="nav-item"><a class="nav-link" href="{{ route('logout') }}">Logout</a></li>
 									</ul>
 								@else

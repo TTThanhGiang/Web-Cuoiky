@@ -121,11 +121,15 @@
 										@endif
 									</div>
 									<div class="prd-bottom">
-
-										<a href="" class="social-info">
-											<span class="ti-bag"></span>
-											<p class="hover-text">add to bag</p>
-										</a>
+										<form id="add-to-cart-{{ $product->id }}" action="{{ route('cart.add') }}" method="POST" class="social-info">
+											@csrf
+											<input type="hidden" name="product_id" value="{{ $product->id }}">
+											<input type="hidden" name="quantity" value="1">
+											<a href="javascript:void(0);" onclick="document.getElementById('add-to-cart-{{ $product->id }}').submit();">
+												<span class="ti-bag"></span>
+												<p class="hover-text">add to bag</p>
+											</a>
+										</form>
 										<a href="" class="social-info">
 											<span class="lnr lnr-heart"></span>
 											<p class="hover-text">Wishlist</p>

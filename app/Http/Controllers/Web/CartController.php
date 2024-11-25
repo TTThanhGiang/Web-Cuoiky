@@ -9,6 +9,7 @@ use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -59,7 +60,9 @@ class CartController extends Controller
         $totalPrice = $cartItems->sum(function ($item) {
             return $item->quantity * $item->price;
         });
-                
+
+        Session::put('current_cart', $cart);
+        
         return view('web.cart', compact('cartItems', 'totalPrice'));
     } 
 
@@ -92,4 +95,7 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Cart updated successfully.');
     }
+
+
+    
 }
