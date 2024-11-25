@@ -7,7 +7,9 @@ use App\Http\Controllers\Amin\ProductController;
 use App\Http\Controllers\Auth\AccountController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Web\CartController;
+use App\Http\Controllers\Web\CheckoutController;
 use App\Http\Controllers\Web\HomeController;
+use App\Http\Controllers\Web\PaymentController;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +41,17 @@ Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
 });
 
 
+Route::group(['prefix' => 'checkout', 'as' => 'checkout.'], function () {
+    Route::get('/', [CheckoutController::class,'index'])->name('index');
+    Route::post('/', [CheckoutController::class,'order'])->name('order');
+    Route::get('/payment', [CheckoutController::class,'paymentView'])->name('paymentView');
+    Route::post('/vnpay_payment', [PaymentController::class,'vnpay_payment'])->name('vnpay_payment');
+    Route::get('/vnpay_return', [PaymentController::class, 'vnpayReturn'])->name('vnpay.return');
+    Route::post('/cash_payment', [PaymentController::class,'cash_payment'])->name('cash_payment');
+});
+
+
+
 Route::group(['prefix'=> 'account'], function(){
     Route::get('/login', [AuthController::class, 'formLogin'])->name('login');
     Route::get('/verify-account/{email}', [AuthController::class, 'verify'])->name('verify');
@@ -57,6 +70,8 @@ Route::group(['prefix'=> 'account'], function(){
 
     Route::get('/forgot-password', [AuthController::class, 'formForgotPassword'])->name('forgotPassword');
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+
+    Route::get('/orders', [AuthController::class, 'orders'])->name('orders');
 
 });
 

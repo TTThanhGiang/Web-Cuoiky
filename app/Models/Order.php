@@ -11,6 +11,10 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
+        'name',
+        'email',
+        'address',
+        'phone',
         'total_price',
         'payment_status',
         'delivery_status',
@@ -27,4 +31,6 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);    
     }
+
+    
 }

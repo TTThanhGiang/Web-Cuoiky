@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Mail\ForgotPasswordMail;
 use App\Mail\VerifyAccount;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -128,5 +129,11 @@ class AuthController extends Controller
             return redirect()->route('login')->with('success', 'Password changed successfully, Login now');
         }
         return redirect()->back()->with('error','Something error, please try again!');
+    }
+
+
+    public function orders(){
+        $orders = Order::where('user_id', Auth::id())->get();
+        return view('web.auth.orders', compact('orders'));
     }
 }
