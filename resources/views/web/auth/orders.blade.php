@@ -24,14 +24,13 @@
         <div class="container">
             <div class="cart_inner">
                 <div class="table-responsive">
-                @if(isset($orders))
+                @if(isset($orders) && $orders->count()>0)
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Order</th>
                                 <th scope="col">Total Price</th>
                                 <th scope="col">Payment Status</th>
-                                <th scope="col">Delivery Status</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -47,9 +46,6 @@
                                 </td>
                                 <td>
                                     <h5>{{ $item->payment_status}}</h5>
-                                </td>
-                                <td>
-                                    <h5>{{ $item->delivery_status}}</h5>
                                 </td>
                                 <td>
                                 @if ($item->payment_status == 'failed')
@@ -69,14 +65,14 @@
                                 @endif
                                 </td>
                                 <td>
-                                    <h5>View</h5>
+                                    <h5><a href="{{ route('orderDetails', $item->id)}}">View</a></h5>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                     @else
-                        <p>Your cart is empty!</p>
+                        <p>You don't have any orders yet!</p>
                     @endif
                 </div>
             </div>

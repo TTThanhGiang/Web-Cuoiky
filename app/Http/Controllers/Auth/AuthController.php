@@ -9,6 +9,7 @@ use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Mail\ForgotPasswordMail;
 use App\Mail\VerifyAccount;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -135,5 +136,29 @@ class AuthController extends Controller
     public function orders(){
         $orders = Order::where('user_id', Auth::id())->get();
         return view('web.auth.orders', compact('orders'));
+    }
+
+    public function viewOrder($orderId){
+        $order = Order::where('id', $orderId)
+                    ->where('user_id', Auth::id())
+                    ->first();
+        $orderItems = OrderItem::where('order_id', $orderId)->get();
+
+        return view('web.auth.view_order', compact('order','orderItems'));
+
+    }
+    
+    public function updateStatus(Request $request){
+        $order = Order::findOrFail($request->id);
+
+        if($order->delivery_status == 'pending'){
+            $order->delivery_status = 'delivered';
+            $order->payment_status = 'paid';
+            $order->completed_at = now();
+            $order->save();
+            return redirect()->back()->with('success', 'Order status updated to Received!');
+        }
+        return redirect()->back()->with('error', 'Unable to update order status.');
+
     }
 }

@@ -75,6 +75,9 @@ Route::group(['prefix'=> 'account'], function(){
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 
     Route::get('/orders', [AuthController::class, 'orders'])->name('orders');
+    Route::post('/order-details', [AuthController::class, 'updateStatus'])->name('updateStatus');
+    Route::get('/order-details/{orderId}', [AuthController::class, 'viewOrder'])->name('orderDetails');
+    
 
 });
 

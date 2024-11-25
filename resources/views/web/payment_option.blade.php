@@ -54,25 +54,21 @@
                     <div class="col-lg-6">
                         <div class="order_box">
                             <h2>Choose Payment Method</h2>
-                            <div >
-                                <div class="">
-                                    <form action="{{ route('checkout.vnpay_payment')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="order_id" value="{{ $currentOrder->id }}">
-                                        <input type="hidden" name="total_price" value="{{ $currentOrder->total_price }}">
-                                        <input type="hidden" name="order_info" value="Order payment #{{ $currentOrder->id }}">
-                                        <button class="primary-btn" type="submit" name="redirect" >VNPay Payment</button>
-                                    </form>
+                            <div class="checkout_btn_inner d-flex align-items-center">
+                                <form action="{{ route('checkout.vnpay_payment')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="order_id" value="{{ $currentOrder->id }}">
+                                    <input type="hidden" name="total_price" value="{{ $currentOrder->total_price }}">
+                                    <input type="hidden" name="order_info" value="Order payment #{{ $currentOrder->id }}">
+                                    <button class="primary-btn" type="submit" name="redirect" >VNPay Payment</button>
+                                </form>
                                     
-                                </div>
-                                <div class="">
                                 <form action="{{ route('checkout.cash_payment')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="order_id" value="{{ $currentOrder->id }}">
-                                        <input type="hidden" name="total_price" value="{{ $currentOrder->total_price }}">
-                                        <button class="primary-btn" type="submit" name="redirect" >Payment upon receipt</button>
-                                    </form>
-                                </div>
+                                    @csrf
+                                    <input type="hidden" name="order_id" value="{{ $currentOrder->id }}">
+                                    <input type="hidden" name="total_price" value="{{ $currentOrder->total_price }}">
+                                    <button class="primary-btn" type="submit" name="redirect" >Payment upon receipt</button>
+                                </form>
 
                             </div>
                         </div>
