@@ -42,7 +42,7 @@
         <li class="nav-item has-submenu">
           <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
           <a
-            class="nav-link submenu-toggle"
+            class="{{ $view == 'categories' ? 'nav-link submenu-toggle active' : 'nav-link submenu-toggle' }}"
             href="#"
             data-bs-toggle="collapse"
             data-bs-target="#submenu-0"
@@ -95,16 +95,16 @@
             <ul class="submenu-list list-unstyled">
               <li class="submenu-item">
                 <a
-                  class="{ childView != null && childView == 'allCategory' ? 'submenu-link active' : 'submenu-link'}"
-                  href=""
+                  class="{{ $childView != null && $childView == 'management-category' ? 'submenu-link active' : 'submenu-link'}}"
+                  href="{{ route('admin.category.index') }}"
                 >
                 All Categories
                 </a>
               </li>
               <li class="submenu-item">
                 <a
-                  class="{ childView != null && childView == 'createCategory' ? 'submenu-link active' : 'submenu-link'}"
-                  href="">
+                  class="{{ $childView != null && $childView == 'createCategory' ? 'submenu-link active' : 'submenu-link'}}"
+                  href="{{ route('admin.category.create') }}">
                   Create Categories
                 </a>
               </li>
@@ -115,14 +115,14 @@
         <li class="nav-item has-submenu">
           <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
           <a
-            class="nav-link submenu-toggle"
-            href="#"
+            class="{{ $view == 'products' ? 'nav-link submenu-toggle active' : 'nav-link submenu-toggle' }}"
+            href=""
             data-bs-toggle="collapse"
             data-bs-target="#submenu-1"
             aria-expanded="false"
             aria-controls="submenu-1"
           >
-         
+
             <span class="nav-icon">
               <svg
                 width="1em"
@@ -167,17 +167,17 @@
           >
             <ul class="submenu-list list-unstyled">
               <li class="submenu-item">
-                <a  
-                  class="{ childView != null && childView == 'allProduct' ? 'submenu-link active' : 'submenu-link'}"
-                  href=""
+                <a
+                  class="{{ $childView != null && $childView == 'management-product' ? 'submenu-link active' : 'submenu-link'}}"
+                  href="{{ route('admin.product.index') }}"
                 >
                   All Products
                 </a>
               </li>
               <li class="submenu-item">
                 <a
-                  class="{ childView != null && childView == 'createProduct' ? 'submenu-link active' : 'submenu-link'}"
-                  href=""
+                  class="{{ $childView != null && $childView == 'create' ? 'submenu-link active' : 'submenu-link'}}"
+                  href="{{ route('admin.product.create') }}"
                 >
                   Create Products
                 </a>
@@ -283,13 +283,13 @@
                   User Account
                 </a>
               </li>
-             
+
               <li class="submenu-item">
                 <a
                   class="{{ $childView != null && $childView == 'create-admin' ? 'submenu-link active' : 'submenu-link'}}"
                   href="{{ route('admin.User.create') }}"
                 >
-                  Create User 
+                  Create User
                 </a>
               </li>
             </ul>
@@ -358,13 +358,13 @@
                   All Blogs
                 </a>
               </li>
-             
+
               <li class="submenu-item">
                 <a
                   class="{{ $childView != null && $childView == 'create-blog' ? 'submenu-link active' : 'submenu-link'}}"
                   href="{{ route('admin.blogs.create') }}"
                 >
-                  Create Blog 
+                  Create Blog
                 </a>
               </li>
             </ul>

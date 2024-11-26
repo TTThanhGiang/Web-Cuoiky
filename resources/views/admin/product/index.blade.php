@@ -2,7 +2,7 @@
 
 @section('title', 'List Product')
 
-@section('content')    
+@section('content')
 <section>
       <div class="app-wrapper">
         <div class="app-content pt-3 p-md-3 p-lg-4">
@@ -11,7 +11,7 @@
               class="row g-3 mb-4 align-items-center justify-content-between"
             >
               <div class="col-auto">
-                <h1 class="app-page-title mb-0">Sản phẩm</h1>
+                <h1 class="app-page-title mb-0">Products</h1>
               </div>
               <div class="col-auto">
                 <div class="page-utilities">
@@ -64,7 +64,7 @@
                         class="btn app-btn-secondary"
                         th:href="@{/admin/products/create}"
                       >
-                        Thêm sản phẩm
+                        Add Product
                       </a>
                     </div>
                   </div>
