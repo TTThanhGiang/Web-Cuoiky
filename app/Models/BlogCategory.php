@@ -10,6 +10,8 @@ class BlogCategory extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'blogcategories';
+
     protected $fillable = [
         'id',
         'name',

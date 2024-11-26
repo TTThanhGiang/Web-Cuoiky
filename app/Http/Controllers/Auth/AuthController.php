@@ -52,6 +52,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request){
         $params = $request->validated();
         $params['role_id'] = 2;
+        dd($params);
         $result = User::create($params);
         if($result){
             try {
