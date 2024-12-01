@@ -134,11 +134,14 @@ Route::post('admin/categories/{id}/update', [CategoryController::class, 'update'
 Route::delete('admin/categories/{id}/delete', [CategoryController::class, 'delete'])->name('admin.category.delete');
 
 Route::get('admin/products', [ProductController::class, 'index'])->name('admin.product.index');
+
 Route::get('admin/products/create', [ProductController::class, 'create'])->name('admin.product.create');
 Route::post('admin/products/store', [ProductController::class, 'store'])->name('admin.product.store');
 
-Route::get('admin/products/update', [ProductController::class, 'update'])->name('admin.product.update');
-Route::get('admin/products/delete', [ProductController::class, 'delete'])->name('admin.product.delete');
+Route::get('admin/products/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
+Route::post('admin/products/{id}/update', [ProductController::class, 'update'])->name('admin.product.update');
+
+Route::delete('admin/products/{id}/delete', [ProductController::class, 'delete'])->name('admin.product.delete');
 
 
 

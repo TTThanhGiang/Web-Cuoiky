@@ -12,49 +12,30 @@
               class="row g-3 mb-4 align-items-center justify-content-between"
             >
               <div class="col-auto">
-                <h1 class="app-page-title mb-0">Thêm sản phẩm mới</h1>
+                <h1 class="app-page-title mb-0">Add category</h1>
               </div>
             </div>
             <!--//row-->
             <div class="row g-4">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <div class="container-product">
-                  <form
-                    th:action="@{/admin/products/create}"
-                    th:object="${product}"
-                    method="post"
-                    enctype="multipart/form-data"
-                  >
-                    <label for="product_id">Mã sản phẩm:</label>
-                    <input type="text" th:field="*{id}" required />
+                <div class="container-category">
+                <form action="{{ route('admin.category.store') }}" method="POST">
+                    @csrf
+                    @method('POST')
 
-                    <label for="product_name">Tên sản phẩm:</label>
-                    <input type="text" th:field="*{name}" required />
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" class="form-control" value="" required>
 
-                    <label for="product_price">Đơn giá:</label>
-                    <input type="number" th:field="*{price}" required />
+                        <label for="description">Description</label>
+                        <input type="text" name="description" id="description" class="form-control" value="">
 
-                    <label for="product_quantity">Số lượng tồn:</label>
-                    <input type="number" th:field="*{quantity}" required />
+                    <div class="button-container">
+                        <button type="submit" class="btn btn-primary">Add Category</button>
+                        <a href="{{ route('admin.category.index') }}" class="btn btn-secondary">Back</a>
+                    </div>
 
-                    <label for="product_image">Hình ảnh sản phẩm:</label>
-                    <input type="file" th:field="*{image}" />
+                </form>
 
-                    <label for="product_category">Danh mục:</label>
-                    <select th:field="*{categoryid}" required>
-                      <option value="">Chọn danh mục</option>
-                      <option
-                        th:each="category : ${categories}"
-                        th:value="${category.id}"
-                        th:text="${category.name}"
-                      ></option>
-                    </select>
-
-                    <label for="product_description">Mô tả sản phẩm:</label>
-                    <textarea th:field="*{description}"></textarea>
-
-                    <input type="submit" value="Upload sản phẩm" />
-                  </form>
                 </div>
               </div>
             </div>
