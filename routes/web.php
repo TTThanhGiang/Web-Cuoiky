@@ -77,17 +77,22 @@ Route::group(['prefix'=> 'account'], function(){
     Route::get('/orders', [AuthController::class, 'orders'])->name('orders');
     Route::post('/order-details', [AuthController::class, 'updateStatus'])->name('updateStatus');
     Route::get('/order-details/{orderId}', [AuthController::class, 'viewOrder'])->name('orderDetails');
-    
+    Route::get('/search', [BlogController::class, 'search'])->name('search');
 
 });
 
 Route::group(['prefix' => 'admin/blogs', 'as' => 'admin.blogs.'], function () {
+    Route::resource('blogs', BlogController::class);
     Route::get('/', [BlogController::class, 'index'])->name('index'); 
-    Route::get('/create', [BlogController::class, 'create'])->name('create'); 
-    Route::post('/create', [BlogController::class, 'store'])->name('store');
-
-    Route::get('/edit/{id}', [BlogController::class, 'edit'])->name('edit'); 
+    Route::get('/create', [BlogController::class, 'create'])->name(name: 'create'); 
+    Route::post('/create', [BlogController::class,'store'])->name('store');
+    
+    Route::get('/edit/{id}', [BlogController::class, 'edit'])->name('edit');
     Route::post('/edit/{id}', [BlogController::class, 'update'])->name('update');
+
+   // Route::get('/delete/{id}', [BlogController::class, 'destroy'])->name('delete');
+    Route::delete('/delete/{id}', [BlogController::class,'destroy'])->name('delete');
+    Route::get('/show/{id}', [BlogController::class, 'show'])->name('show');
 });
 
 

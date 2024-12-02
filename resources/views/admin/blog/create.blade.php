@@ -19,30 +19,31 @@
             <div class="row g-4">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="container-product">
-                  <form action="" object="" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.blogs.store') }}" method="post" enctype="multipart/form-data">
+                  @csrf
 
-                    <label for="blog_title">Title:</label>
-                    <input type="text" name="name" required />
+                  <label for="blog_title">Title:</label>
+                  <input type="text" name="title" required />
 
-                    <label for="blog_image">Image:</label>
-                    <input type="file" name="image" required />
+                  <label for="blog_image">Image:</label>
+                  <input type="file" name="image" required />
 
-                    <label for="blog_image">Start:</label>
-                    <input class="form-control" type="date" name="start" required />
+                  <label for="blog_start">Start:</label>
+                  <input class="form-control" type="date" name="start_at" required />
 
-                    <label for="blog_image">End:</label>
-                    <input class="form-control" type="date" name="end" required />
-
+                  <label for="blog_end">End:</label>
+                  <input class="form-control" type="date" name="end_at" required />
 
                     <label for="product_category">Category:</label>
-                    <select field="" required>
+                    <select  name="blogcate_id" field="" required>
                       <option value="">Chọn danh mục</option>
-                      <option
-                      ></option>
+                      @foreach($categories as $id => $name)
+                          <option value="{{ $id }}">{{ $name }}</option>
+                      @endforeach
                     </select>
 
                     <label for="product_description">Mô tả sản phẩm:</label>
-                    <textarea  id= "editor" name="description"></textarea>
+                    <textarea  id= "editor" name="content"></textarea>
 
                     <input type="submit" value="Upload" />
                   </form>

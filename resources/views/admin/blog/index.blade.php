@@ -19,7 +19,7 @@
                     <div class="col-auto">
                       <form class="table-search-form row gx-1 align-items-center">
                         <div class="col-auto">
-                          <input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Search"/>
+                        <input type="text" name="search" class="form-control" placeholder="Search blogs" value="{{ request('search') }}">
                         </div>
                         <div class="col-auto">
                           <button type="submit" class="btn app-btn-secondary"> Search</button>
@@ -27,14 +27,16 @@
                       </form>
                     </div>
                     <div class="col-auto">
-                      <select class="form-select w-auto" name="category" >
-                        <option value="all" selected="">All</option>
-                        <option></option>
-                      </select>
+                        <select class="form-select w-auto" name="category">
+                            <option value="all" selected="">All</option>
+                            @foreach($categories as $id => $name)
+                                <option value="{{ $id }}">{{ $name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <!--//col-->
                     <div class="col-auto">
-                      <a class="btn app-btn-secondary" href="#">
+                      <a class="btn app-btn-secondary" href="{{route('admin.blogs.create')}}">
                         Add Blog
                       </a>
                     </div>
@@ -55,26 +57,38 @@
                       <table class="table app-table-hover mb-0 text-left">
                         <thead>
                         <tr>
-                             <th style="text-align: center; width: 400px ;">Blog</th>
+                             <th style="text-align: center; width: 400px ;">Title</th>
                              <th style="text-align: center; width: 100px ;">Image</th>
                              <th style="text-align: center; width: 100px ;">Date</th>
                              <th style="text-align: center; width: 150px ;">Poster</th>
-                             <th style="text-align: center; width: 100px ;">Action</th>
+                             <th style="text-align: center; width: 100px ;">Category</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>Blog</td>
-                            <td style="text-align: center;">
-                                <img style="width: 100px; height: 100px" src="assets/web/img/blog/c1.jpg" alt="">
-                            </td>
-                            <td style="text-align: center;">23-11-2024</td>
-                            <td style="text-align: center;">Thành Giang</td>
-                            <td style="text-align: center;">    
-                                <a style="color: red" href="#">Sửa</a>
-                                <a style="color: red" href="#">Xóa</a>
-                            </td>
-                        </tr>
+                        <tbody> 
+                        @foreach($blogs as $blog) 
+                          <tr>
+                          <td><a href="{{ route('admin.blogs.show', $blog->id) }}">{{ $blog->title }}</a></td>
+                              <td>
+                                  @if($blog->image)
+                                      <img src="{{ asset('images/' . $blog->image) }}" alt="" width="100">
+                                  @endif
+                              </td>
+                              <td>{{ \Carbon\Carbon::parse($blog->start_at)->format('Y-m-d') }}</td>        
+                              <td style="text-align: center;">{{ $blog->poster_id }}</td>
+                              <td style="text-align: center;">{{ $blog->category->name }}</td>
+                              <td style="text-align: center;">
+                                  <a  href="{{ route('admin.blogs.edit', $blog->id) }}" class="btn btn-primary">Edit</a>
+                              </td>
+                              <td style="text-align: center;">
+                                  <form style="align-items: center;" action="{{ route('admin.blogs.delete', $blog->id) }}" method="post">
+                                      @csrf
+                                      @method('DELETE')
+                                      <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                                  </form>
+                              </td>
+                          </tr>
+                        
+                      @endforeach
                         </tbody>
                       </table>
                     </div>

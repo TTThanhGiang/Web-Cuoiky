@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->get('/order', function (Request $request) {
     return $request->order();
 });
+Route::middleware('auth:sanctum')->get('/blogs', function (Request $request) {
+    return $request->order();
+});
+
