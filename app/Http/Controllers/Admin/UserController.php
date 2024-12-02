@@ -14,7 +14,7 @@ class UserController extends Controller
         $childView = 'management-user'; // hoặc lấy giá trị này từ đâu đó, ví dụ: session hoặc query string
         $view = 'users';
         return view('admin.user.index', compact('childView','view','users'));
-       
+
     }
 
     // Hiển thị form tạo người dùng mới
@@ -100,12 +100,10 @@ class UserController extends Controller
         $search = $request->input('searchusers');
         $view = 'users';
         $childView = 'management-user';
-        // Lọc đơn hàng theo tên (hoặc các trường khác)
         $users = User::when($search, function ($query) use ($search) {
             return $query->where('name', 'like', '%' . $search . '%');
         })->get();
 
-        // Trả về view với các đơn hàng đã lọc
         return view('admin.User.index', compact('users','view','childView'));
     }
 }

@@ -50,22 +50,16 @@
                         >
                           All
                         </option>
-                        <option
-                          th:each="category : ${categories}"
-                          th:value="${category.id}"
-                          th:text="${category.name}"
-                          th:selected="${category.id == selectedCategoryId}"
-                        ></option>
                       </select>
                     </div>
                     <!--//col-->
                     <div class="col-auto">
-                      <a
+                    <a
                         class="btn app-btn-secondary"
-                        th:href="@{/admin/products/create}"
-                      >
+                        href="{{ route('admin.product.create') }}"
+                    >
                         Add Product
-                      </a>
+                    </a>
                     </div>
                   </div>
                   <!--//row-->
@@ -108,43 +102,37 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr th:each="product : ${products}">
-                            <td
-                              style="text-align: center"
-                              th:text="${product.id}"
-                            ></td>
-                            <td style="text-align: center">
-                              <img
-                                style="max-width: 100px; max-height: 100px"
-                                th:src="@{/assets/web/img/product/{image}(image=${product.image})}"
-                                alt=""
-                              />
-                            </td>
-                            <td th:text="${product.name}"></td>
-                            <td
-                              style="text-align: center"
-                              th:text="${product.price}"
-                            ></td>
-                            <td
-                              style="text-align: center"
-                              th:text="${product.quantity}"
-                            ></td>
-                            <td style="text-align: center">
-                              <a
-                                style="color: red"
-                                th:href="@{/admin/products/edit/{id}(id=${product.id})}"
-                              >
-                                Sửa
-                              </a>
-                              <a
-                                style="color: red"
-                                th:href="@{/admin/products/delete/{id}(id=${product.id})}"
-                              >
-                                Xóa
-                              </a>
-                            </td>
-                          </tr>
+                            @foreach($products as $product)
+                                <tr>
+                                    <td style="text-align: center">{{ $product->id }}</td>
+                                    <td style="text-align: center">
+                                        <img
+                                            style="max-width: 100px; max-height: 100px"
+                                            src="{{ asset('assets/web/img/product/' . $product->image) }}"
+                                            alt=""
+                                        />
+                                    </td>
+                                    <td>{{ $product->name }}</td>
+                                    <td style="text-align: center">{{ number_format($product->price, 0, ',', '.') }} VND</td>
+                                    <td style="text-align: center">{{ $product->quantity }}</td>
+                                    <td style="text-align: center">
+                                        <a
+                                            style="color: red"
+                                            href="{{ route('admin.product.edit', $product->id) }}"
+                                        >
+                                            Update
+                                        </a>
+                                        <form action="{{ route('admin.product.delete', $product->id) }}" method="POST" onsubmit="return confirm('Are you sure to delete this product?');">
+    @csrf
+    @method('DELETE')
+    <button type="submit" style="color: red; background: none; border: none; cursor: pointer;">Delete</button>
+</form>
+
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
+
                       </table>
                     </div>
                     <!--//table-responsive-->
