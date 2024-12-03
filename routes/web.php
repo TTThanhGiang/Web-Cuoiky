@@ -77,7 +77,6 @@ Route::group(['prefix'=> 'account'], function(){
     Route::get('/orders', [AuthController::class, 'orders'])->name('orders');
     Route::post('/order-details', [AuthController::class, 'updateStatus'])->name('updateStatus');
     Route::get('/order-details/{orderId}', [AuthController::class, 'viewOrder'])->name('orderDetails');
-    Route::get('/search', [BlogController::class, 'search'])->name('search');
 
 });
 
