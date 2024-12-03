@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\AccountController;
 use App\Http\Controllers\Auth\AuthController;
-
+use app\Http\Controllers\ChatController ;
 use App\Http\Controllers\Admin\OrderController;
 use App\Models\Order;
 use App\Http\Controllers\Web\CartController;
@@ -142,4 +142,7 @@ Route::get('admin/products/delete', [ProductController::class, 'delete'])->name(
 
 
 
+
+Route::get('/chatify/{id?}', [ChatController::class, 'showChat'])->name('chatify.chat');
+Route::post('/chatify/{id}/send', [ChatController::class, 'sendMessage'])->name('chatify.sendMessage');
 
