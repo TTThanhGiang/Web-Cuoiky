@@ -14,7 +14,9 @@
       <ul class="app-menu list-unstyled accordion" id="menu-accordion">
         <li class="nav-item">
           <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-          <a class="nav-link" href="index.html">
+          <a class="{{ $view == 'overview' ? 'nav-link active' : 'nav-link' }}"
+              href="{{ route('admin.overview') }}"
+          >
             <span class="nav-icon">
               <svg
                 width="1em"
@@ -192,10 +194,6 @@
          class="{{ $view == 'orders' ? 'nav-link active' : 'nav-link' }}"
 
             href="{{ route('admin.order.index') }}"
-            data-bs-toggle="collapse"
-            data-bs-target="#submenu-2"
-            aria-expanded="false"
-            aria-controls="submenu-2"
           >
             <span class="nav-icon">
               <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->

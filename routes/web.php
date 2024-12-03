@@ -79,6 +79,12 @@ Route::group(['prefix'=> 'account'], function(){
     Route::get('/order-details/{orderId}', [AuthController::class, 'viewOrder'])->name('orderDetails');
 });
 
+Route::get('admin/overview', function () {
+    $view = 'overview';
+    $childView = 'management';
+    return view('admin.index', compact('view','childView'));
+})->name('admin.overview');
+
 Route::group(['prefix' => 'admin/blogs', 'as' => 'admin.blogs.'], function () {
     Route::resource('blogs', BlogController::class);
     

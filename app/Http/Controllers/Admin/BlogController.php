@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -47,7 +48,7 @@ class BlogController extends Controller
             $params['image'] = $imageName;
         }
 
-        $params['poster_id'] = 2;
+        $params['poster_id'] = Auth::id();
         $blog = Blog::create($params);
 
         // Quay lại danh sách blog với thông báo thành công
