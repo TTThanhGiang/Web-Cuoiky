@@ -19,33 +19,38 @@
             <div class="row g-4">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="container-product">
-                  <form action="" object="" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.blogs.update', $blog->id) }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  @method('POST')
 
-                    <label for="blog_title">Title:</label>
-                    <input type="text" name="name" required />
+                  <label for="blog_title">Title:</label>
+                  <input type="text" name="title" value="{{ $blog->title }}" required />
 
-                    <label for="blog_image">Image:</label>
-                    <input type="file" name="image" required />
+                  <label for="blog_image">Image:</label>
+                  <input type="file" name="image" />
+                  @if($blog->image)
+                      <img src="{{ asset('images/' . $blog->image) }}" alt="{{ $blog->title }}" width="100">
+                  @endif
 
-                    <label for="blog_image">Start:</label>
-                    <input class="form-control" type="date" name="start" required />
+                  <label for="blog_start">Start:</label>
+                  <input class="form-control" type="date" name="start_at" value="{{ \Carbon\Carbon::parse($blog->start_at)->format('Y-m-d') }}" required />
 
-                    <label for="blog_image">End:</label>
-                    <input class="form-control" type="date" name="end" required />
+                  <label for="blog_end">End:</label>
+                  <input class="form-control" type="date" name="end_at" value="{{ \Carbon\Carbon::parse($blog->end_at)->format('Y-m-d') }}" required />
 
+                  <label for="product_category">Category:</label>
+                  <select class="form-control" name="blogcate_id" required>
+                      <option value="">Select Category</option>
+                      @foreach($categories as $id => $name)
+                          <option value="{{ $id }}" {{ $blog->blogcate_id == $id ? 'selected' : '' }}>{{ $name }}</option>
+                      @endforeach
+                  </select>
 
-                    <label for="product_category">Category:</label>
-                    <select field="" required>
-                      <option value="">Chọn danh mục</option>
-                      <option
-                      ></option>
-                    </select>
+                  <label for="product_description">Content:</label>
+                  <textarea id="editor" name="content" required>{{ $blog->content }}</textarea>
 
-                    <label for="product_description">Mô tả sản phẩm:</label>
-                    <textarea  id= "editor" name="description"></textarea>
-
-                    <input type="submit" value="Upload" />
-                  </form>
+                  <input type="submit" value="Update" />
+              </form>
                 </div>
               </div>
             </div>
