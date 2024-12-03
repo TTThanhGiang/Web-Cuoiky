@@ -14,7 +14,7 @@ class UserController extends Controller
         $childView = 'management-user'; // hoặc lấy giá trị này từ đâu đó, ví dụ: session hoặc query string
         $view = 'users';
         return view('admin.user.index', compact('childView','view','users'));
-       
+
     }
 
     // Hiển thị form tạo người dùng mới
@@ -24,12 +24,11 @@ class UserController extends Controller
         $view = 'users';
         return view('admin.user.create', compact('childView', 'view'));
     }
-
-    // Xử lý lưu người dùng
+    
     public function store(Request $request)
     {
         // Validate dữ liệu
-        $request->validate([
+        $params = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'nullable|string',
             'email' => 'required|email|unique:users,email',
@@ -39,18 +38,8 @@ class UserController extends Controller
             'role_id' => 'required|exists:roles,id',
         ]);
 
-        // Tạo người dùng mới
-        $user = new User();
-        $user->name = $request->name;
-        $user->address = $request->address;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->status = $request->status;
-        $user->role_id = $request->role_id;
-        $user->password = $request->password;;  // Hoặc tạo mật khẩu tự động hoặc yêu cầu người dùng nhập
-        $user->save();
+        $result = User::create($params);
 
-        // Quay lại danh sách người dùng với thông báo thành công
         return redirect()->route('admin.User.index')->with('success', 'User created successfully');
     }
 
@@ -111,12 +100,10 @@ class UserController extends Controller
         $search = $request->input('searchusers');
         $view = 'users';
         $childView = 'management-user';
-        // Lọc đơn hàng theo tên (hoặc các trường khác)
         $users = User::when($search, function ($query) use ($search) {
             return $query->where('name', 'like', '%' . $search . '%');
         })->get();
 
-        // Trả về view với các đơn hàng đã lọc
         return view('admin.User.index', compact('users','view','childView'));
     }
 }

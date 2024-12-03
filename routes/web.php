@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Amin\CategoryController;
-use App\Http\Controllers\Amin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\AccountController;
 use App\Http\Controllers\Auth\AuthController;
 
@@ -37,9 +37,9 @@ Route::get('/blogs/{id}', [HomeController::class, 'viewBlogDetail'])->name('blog
 
 
 Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
-    Route::get('/', [CartController::class, 'viewCart'])->name('view');      
-    Route::post('/', [CartController::class, 'addToCart'])->name('add');    
-    Route::post('/update', [CartController::class, 'update'])->name('update'); 
+    Route::get('/', [CartController::class, 'viewCart'])->name('view');
+    Route::post('/', [CartController::class, 'addToCart'])->name('add');
+    Route::post('/update', [CartController::class, 'update'])->name('update');
     Route::post('/remove', [CartController::class, 'remove'])->name('remove');
 });
 
@@ -77,15 +77,15 @@ Route::group(['prefix'=> 'account'], function(){
     Route::get('/orders', [AuthController::class, 'orders'])->name('orders');
     Route::post('/order-details', [AuthController::class, 'updateStatus'])->name('updateStatus');
     Route::get('/order-details/{orderId}', [AuthController::class, 'viewOrder'])->name('orderDetails');
-
 });
 
 Route::group(['prefix' => 'admin/blogs', 'as' => 'admin.blogs.'], function () {
     Route::resource('blogs', BlogController::class);
-    Route::get('/', [BlogController::class, 'index'])->name('index'); 
-    Route::get('/create', [BlogController::class, 'create'])->name(name: 'create'); 
-    Route::post('/create', [BlogController::class,'store'])->name('store');
     
+    Route::get('/', [BlogController::class, 'index'])->name('index');
+    Route::get('/create', [BlogController::class, 'create'])->name('create');
+    Route::post('/create', [BlogController::class, 'store'])->name('store');
+
     Route::get('/edit/{id}', [BlogController::class, 'edit'])->name('edit');
     Route::post('/edit/{id}', [BlogController::class, 'update'])->name('update');
 
@@ -98,11 +98,11 @@ Route::group(['prefix' => 'admin/blogs', 'as' => 'admin.blogs.'], function () {
 Route::group(['prefix' => 'admin'], function () {
     // Show all users
     Route::get('/user/index', [UserController::class, 'index'])->name('admin.User.index');
-    
+
     // Create a new user
     Route::get('/user/create', [UserController::class, 'create'])->name('admin.User.create');
     Route::post('/user/user', [UserController::class, 'store'])->name('admin.User.store');
-    
+
     // Edit an existing user
     Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.User.edit');
     Route::post('/user/{id}/update', [UserController::class, 'update'])->name('admin.User.update');
@@ -124,6 +124,28 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 });
+
+
+
+Route::get('admin/categories', [CategoryController::class, 'index'])->name('admin.category.index');
+
+Route::get('admin/categories/create', [CategoryController::class, 'create'])->name('admin.category.create');
+Route::post('admin/categories/store', [CategoryController::class, 'store'])->name('admin.category.store');
+
+Route::get('admin/categories/{id}/edit', [CategoryController::class, 'edit'])->name('admin.category.edit');
+Route::post('admin/categories/{id}/update', [CategoryController::class, 'update'])->name('admin.category.update');
+
+Route::delete('admin/categories/{id}/delete', [CategoryController::class, 'delete'])->name('admin.category.delete');
+
+Route::get('admin/products', [ProductController::class, 'index'])->name('admin.product.index');
+
+Route::get('admin/products/create', [ProductController::class, 'create'])->name('admin.product.create');
+Route::post('admin/products/store', [ProductController::class, 'store'])->name('admin.product.store');
+
+Route::get('admin/products/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
+Route::post('admin/products/{id}/update', [ProductController::class, 'update'])->name('admin.product.update');
+
+Route::delete('admin/products/{id}/delete', [ProductController::class, 'delete'])->name('admin.product.delete');
 
 
 
