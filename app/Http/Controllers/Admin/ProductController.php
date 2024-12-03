@@ -12,10 +12,11 @@ class ProductController extends Controller
 {
     public function index()
     {
+        $image = Image::all();
         $products = Product::all();
         $childView = 'management-product';
         $view = 'products';
-        return view('admin.product.index', compact('childView','view','products'));
+        return view('admin.product.index', compact('childView','view','products', 'image'));
     }
 
     public function create()
@@ -51,13 +52,21 @@ class ProductController extends Controller
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
+
             $fileName = $file->getClientOriginalName();
-            $filePath = $file->storeAs('assets/admin/web/product', $fileName, 'public');
+
+            $destinationPath = public_path('assets/web/img/product');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+
+            $file->move($destinationPath, $fileName);
 
             Image::create([
                 'product_id' => $product->id,
                 'file_name' => $fileName,
-                'path' => $filePath,
+                'path' => 'web/img/product/' . $fileName,
             ]);
         }
 
@@ -65,8 +74,10 @@ class ProductController extends Controller
     }
 
 
+
     public function edit($id)
     {
+        $image = Image::where('product_id', $id)->first();
         $categories = Category::all();
         $product = Product::find($id);
         if (!$product) {
@@ -76,7 +87,7 @@ class ProductController extends Controller
         $childView = 'management-product';
         $view = 'product';
 
-        return view('admin.product.edit', compact('childView','view','product', 'categories'));
+        return view('admin.product.edit', compact('childView','view','product', 'categories', 'image'));
     }
 
     public function update(Request $request, $id)
@@ -106,16 +117,22 @@ class ProductController extends Controller
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $fileName = $file->getClientOriginalName();
-            $filePath = $file->storeAs('assets/admin/web/product', $fileName, 'public');
 
-            Image::updateOrCreate(
-                ['product_id' => $product->id],
-                [
-                    'file_name' => $fileName,
-                    'path' => $filePath,
-                ]
-            );
+            $fileName = $file->getClientOriginalName();
+
+            $destinationPath = public_path('assets/web/img/product');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+
+            $file->move($destinationPath, $fileName);
+
+            Image::create([
+                'product_id' => $product->id,
+                'file_name' => $fileName,
+                'path' => 'admin/web/product/' . $fileName,
+            ]);
         }
 
         return redirect()->route('admin.product.index')->with('success', 'Product updated successfully');
@@ -136,5 +153,14 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('admin.product.index')->with('success', 'Product deleted successfully');
+    }
+
+    public function getProductImage($id)
+    {
+        $image = Image::where('product_id', $id)->first();
+        if ($image) {
+            return asset($image->path);
+        }
+        return asset('web/img/product/default-image.jpg');
     }
 }

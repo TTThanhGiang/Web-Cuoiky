@@ -108,8 +108,7 @@
                                     <td style="text-align: center">
                                         <img
                                             style="max-width: 100px; max-height: 100px"
-                                            src="{{ asset('assets/web/img/product/' . $product->image) }}"
-                                            alt=""
+                                            src="{{ $product->image ? 'assets/'  .$product->image->path: 'assets/web/img/product/p1.jpg' }}"
                                         />
                                     </td>
                                     <td>{{ $product->name }}</td>

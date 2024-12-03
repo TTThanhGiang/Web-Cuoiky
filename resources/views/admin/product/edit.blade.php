@@ -37,19 +37,18 @@
     <input type="number" name="quantity" value="{{ old('quantity', $product->quantity ?? '') }}" required />
 
     <img
-        id="preview_image"
-        class="img-fluid"
-        src="{{ asset('assets/web/img/product/' . ($productImg ?? 'default-image.jpg')) }}"
-        style="max-width: 200px"
-        data-default-image="{{ asset('assets/web/img/product/' . ($productImg ?? 'default-image.jpg')) }}"
+        style="max-width: 100px; max-height: 100px"
+        src="{{ $product->image ? 'assets/'  .$product->image->path: 'assets/web/img/product/p1.jpg' }}"
     />
 
-    <label for="product_image">Image:</label>
-    <input
-        type="file"
-        name="image"
-        onchange="previewImage(event)"
-    />
+<label for="product_image">Image:</label>
+<input
+    type="file"
+    name="image"
+    id="product_image"
+    accept="image/*"
+    onchange="previewImage(event)"
+/>
 
     <label for="product_category">Category:</label>
     <select name="category_id" required>
