@@ -34,11 +34,11 @@ class AuthController extends Controller
                 $errorMessage = 'Your account is not verified or not active, please check your email again.';
                 return redirect()->back()->with('error', $errorMessage);
             }
-
-            // $redirectRoute = (Auth::user()->role_id == 1) 
-            //     ? 'admin.User.index'
-            //     : 'home.index';   
-            $redirectRoute = 'home.index';
+                
+             $redirectRoute = (Auth::user()->role_id == 1) 
+               ? 'admin.overview'
+              : 'home.index';   
+          
             return redirect()->route($redirectRoute)->with('success','Login successful!');
         }
 
@@ -51,15 +51,14 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request){
         $params = $request->validated();
-        $params['role_id'] = 2;
-        dd($params);
+        $params['role_id'] = 2;     
         $result = User::create($params);
         if($result){
             try {
                 Mail::to($result->email)->send(new VerifyAccount($result));
             } catch (\Exception $e) {
                 $result->delete();
-                return redirect(-back()->with('error', 'Unable to send verification email. Please try again.'));
+                return redirect() ->back()->with('error', 'Unable to send verification email. Please try again.');
             }
             return redirect()->route('login')->with('success', 'Register successfully, please check your email to verify account!');
         }   

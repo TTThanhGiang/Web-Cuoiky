@@ -156,3 +156,13 @@ Route::delete('admin/products/{id}/delete', [ProductController::class, 'delete']
 
 
 
+
+Route::middleware(['auth', 'redirect.not.admin'])->group(function () {
+    Route::get('/chat', function () {
+        return view('chat.index'); // Hoặc trang chat của bạn
+    })->name('chat');
+    Route::get('/chat', function () {
+        return view('chatify.home'); // Trang chính của Chatify dành cho admin
+    });
+
+});

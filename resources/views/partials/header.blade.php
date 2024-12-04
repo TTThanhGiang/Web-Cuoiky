@@ -28,6 +28,13 @@
 								<a href="{{ route('blogs.view')}}" class="nav-link dropdown-toggle">Blog</a>
 							</li>
 							<li class="nav-item submenu dropdown">
+							@if (Auth::id() !== 1)
+								<a href="/chatify/1" class="nav-link dropdown-toggle">Chat</a>
+							@else
+							<a href="/chatify" class="nav-link dropdown-toggle">chat management</a>
+							@endif								
+							</li>
+							<li class="nav-item submenu dropdown">
 								@if(Auth::check())
 									<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 									aria-expanded="false">{{ Auth::user()->name}}</a>
